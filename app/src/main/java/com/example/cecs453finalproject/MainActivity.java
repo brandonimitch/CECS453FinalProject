@@ -4,10 +4,7 @@ package com.example.cecs453finalproject;
 import android.support.v4.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
@@ -20,7 +17,8 @@ import android.view.Menu;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Login.OnFragmentInteractionListener,
-        Signup.OnFragmentInteractionListener {
+        Signup.OnFragmentInteractionListener, AppSettings.OnFragmentInteractionListener,
+        Expenses.OnFragmentInteractionListener, Reports.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,14 +26,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//        FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -95,23 +86,30 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
 
         if (id == R.id.nav_home) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
+          fragment = new Login();
 
-        } else if (id == R.id.nav_tools) {
+        } else if (id == R.id.nav_signup) {
 
-        } else if (id == R.id.nav_share) {
+            fragment = new Signup();
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_settings) {
 
+            fragment = new AppSettings();
+
+        } else if (id == R.id.nav_expenses) {
+
+            fragment = new Expenses();
+
+        } else if (id == R.id.nav_reports) {
+
+            fragment = new Reports();
         }
 
         if(fragment != null) {
-//            FragmentManager fragmentManager = getFragmentManager();
+
             FragmentManager fragmentManager = getSupportFragmentManager();
-//            fragmentManager.beginTransaction().replace(R.id., fragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, fragment).commit();
 
         }
 
