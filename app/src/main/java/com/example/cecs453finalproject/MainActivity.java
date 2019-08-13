@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity
             fragment = new Reports();
         }
 
+        // Begin fragment transaction to open new fragment, if fragment var is not null.
         if(fragment != null) {
 
             FragmentManager fragmentManager = getSupportFragmentManager();
