@@ -1,4 +1,4 @@
-package com.example.cecs453finalproject;
+package com.example.cecs453finalproject.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -16,7 +16,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.example.cecs453finalproject.database.User;
+import com.example.cecs453finalproject.R;
+import com.example.cecs453finalproject.classes.User;
 import com.example.cecs453finalproject.database.UsersDAO;
 
 import java.util.ArrayList;

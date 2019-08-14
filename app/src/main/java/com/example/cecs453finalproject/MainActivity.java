@@ -15,6 +15,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.cecs453finalproject.database.DBHelper;
+import com.example.cecs453finalproject.fragments.AppSettings;
+import com.example.cecs453finalproject.fragments.DailyExpense;
+import com.example.cecs453finalproject.fragments.ExpenseItem;
+import com.example.cecs453finalproject.fragments.Expenses;
+import com.example.cecs453finalproject.fragments.Login;
+import com.example.cecs453finalproject.fragments.MonthlyIncome;
+import com.example.cecs453finalproject.fragments.Reports;
+import com.example.cecs453finalproject.fragments.Signup;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Login.OnFragmentInteractionListener,

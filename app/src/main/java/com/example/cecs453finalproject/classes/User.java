@@ -1,4 +1,4 @@
-package com.example.cecs453finalproject.database;
+package com.example.cecs453finalproject.classes;
 
 
 import java.io.Serializable;

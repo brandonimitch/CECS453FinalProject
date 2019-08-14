@@ -1,23 +1,27 @@
-package com.example.cecs453finalproject;
+package com.example.cecs453finalproject.fragments;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import com.example.cecs453finalproject.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Reports.OnFragmentInteractionListener} interface
+ * {@link AppSettings.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link Reports#newInstance} factory method to
+ * Use the {@link AppSettings#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Reports extends Fragment {
+public class AppSettings extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,7 +33,7 @@ public class Reports extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public Reports() {
+    public AppSettings() {
         // Required empty public constructor
     }
 
@@ -39,11 +43,11 @@ public class Reports extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Reports.
+     * @return A new instance of fragment AppSettings.
      */
     // TODO: Rename and change types and number of parameters
-    public static Reports newInstance(String param1, String param2) {
-        Reports fragment = new Reports();
+    public static AppSettings newInstance(String param1, String param2) {
+        AppSettings fragment = new AppSettings();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,7 +68,44 @@ public class Reports extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_reports, container, false);
+        View v = inflater.inflate(R.layout.fragment_app_settings, container, false);
+
+
+        // Set daily expense button to open expense item fragment.
+        Button dailyExpense = v.findViewById(R.id.dailyExpenseBtn);
+        dailyExpense.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, new DailyExpense()).commit();
+            }
+        });
+
+
+        // Set expense item button to open expense item fragment.
+        Button expenseItem = v.findViewById(R.id.expenseItemBtn);
+        expenseItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, new ExpenseItem()).commit();
+            }
+        });
+
+        // Set monthly income button to open expense item fragment.
+        Button monthlyIncome = v.findViewById(R.id.monthlyIncomeBtn);
+        monthlyIncome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, new MonthlyIncome()).commit();
+            }
+        });
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

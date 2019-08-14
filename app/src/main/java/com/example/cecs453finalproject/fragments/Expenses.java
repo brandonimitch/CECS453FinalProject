@@ -1,4 +1,4 @@
-package com.example.cecs453finalproject;
+package com.example.cecs453finalproject.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -10,7 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.cecs453finalproject.database.Transaction;
+import com.example.cecs453finalproject.R;
+import com.example.cecs453finalproject.adapters.MyRecyclerViewAdapter;
+import com.example.cecs453finalproject.classes.Category;
+import com.example.cecs453finalproject.classes.Transaction;
+import com.example.cecs453finalproject.database.CategoryDAO;
 import com.example.cecs453finalproject.database.TransactionDAO;
 import com.example.cecs453finalproject.database.UsersDAO;
 
@@ -38,7 +42,9 @@ public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClic
     private OnFragmentInteractionListener mListener;
     private TransactionDAO mTransactionDAO;
     private UsersDAO mUserDAO;
+    private CategoryDAO mCategoryDAO;
     private List<Transaction> mTransactionList;
+    private List<Category> mCategoryList;
     private RecyclerView mItemsList;
 
     public Expenses() {
@@ -73,7 +79,11 @@ public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClic
 
         mTransactionDAO = new TransactionDAO(getActivity());
         mUserDAO = new UsersDAO(getActivity());
+        mCategoryDAO = new CategoryDAO(getActivity());
         mTransactionList = mTransactionDAO.getUserTransactions(mUserID);
+        mCategoryList = mCategoryDAO.getUserCategories(mUserID);
+        // TODO: DELETE AFTER TESTING
+        mCategoryDAO.deleteAllUserCategories(mUserID);
     }
 
     @Override
@@ -83,12 +93,14 @@ public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClic
         View v = inflater.inflate(R.layout.fragment_expenses, container, false);
         mItemsList = (RecyclerView) v.findViewById(R.id.expense_recycler_view);
         mItemsList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        final MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(mTransactionList, this);
+        final MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(this, mTransactionList,
+                mCategoryList,this);
+
         mItemsList.setAdapter(adapter);
 
         //TODO: DELETE AFTER TESTING IS COMPLETE
-        Transaction newTransaction = mTransactionDAO.createTransaction(mUserID,"7/7/2019", "Test Expense",
-                "Category", -1, 100.00);
+        Transaction newTransaction = mTransactionDAO.createTransaction(mUserID,"7/7/2019",
+                "Test Expense","Category", -1, 100.00);
         mTransactionList.add(newTransaction);
 
         mTransactionDAO.deleteAllUserTransactions(mUserID);

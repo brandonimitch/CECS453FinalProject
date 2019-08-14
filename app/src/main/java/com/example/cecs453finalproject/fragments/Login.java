@@ -1,4 +1,4 @@
-package com.example.cecs453finalproject;
+package com.example.cecs453finalproject.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -13,7 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.cecs453finalproject.database.User;
+import com.example.cecs453finalproject.R;
+import com.example.cecs453finalproject.classes.User;
 import com.example.cecs453finalproject.database.UsersDAO;
 
 import java.util.List;
@@ -72,7 +73,8 @@ public class Login extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
+        mUserDAO = new UsersDAO(getActivity());
+        userList = mUserDAO.getAllUsers();
     }
 
     @Override
@@ -80,9 +82,6 @@ public class Login extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_login, container, false);
-
-        mUserDAO = new UsersDAO(getActivity());
-        userList = mUserDAO.getAllUsers();
 
         //TODO: DELETE WHEN TESTING PHASE IS OVER
         for (User user : userList)

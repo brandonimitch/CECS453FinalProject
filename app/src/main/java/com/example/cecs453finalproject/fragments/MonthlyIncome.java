@@ -1,4 +1,4 @@
-package com.example.cecs453finalproject;
+package com.example.cecs453finalproject.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,16 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.cecs453finalproject.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ExpenseItem.OnFragmentInteractionListener} interface
+ * {@link MonthlyIncome.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ExpenseItem#newInstance} factory method to
+ * Use the {@link MonthlyIncome#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ExpenseItem extends Fragment {
+public class MonthlyIncome extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,7 +31,7 @@ public class ExpenseItem extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public ExpenseItem() {
+    public MonthlyIncome() {
         // Required empty public constructor
     }
 
@@ -39,11 +41,11 @@ public class ExpenseItem extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ExpenseItem.
+     * @return A new instance of fragment MonthlyIncome.
      */
     // TODO: Rename and change types and number of parameters
-    public static ExpenseItem newInstance(String param1, String param2) {
-        ExpenseItem fragment = new ExpenseItem();
+    public static MonthlyIncome newInstance(String param1, String param2) {
+        MonthlyIncome fragment = new MonthlyIncome();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,7 +66,7 @@ public class ExpenseItem extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_expense_item, container, false);
+        return inflater.inflate(R.layout.fragment_monthly_income, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
