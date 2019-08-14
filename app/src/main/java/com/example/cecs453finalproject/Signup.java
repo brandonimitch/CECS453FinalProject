@@ -5,10 +5,23 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
+
+import com.example.cecs453finalproject.database.DBHelper;
+import com.example.cecs453finalproject.database.User;
+import com.example.cecs453finalproject.database.UsersDAO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -24,12 +37,25 @@ public class Signup extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "SignupActivity";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    //Get all signup boxes
+    private RelativeLayout usernameBox;
+    private RelativeLayout passwordBox;
+    private RelativeLayout retypePasswordBox;
+    private RelativeLayout emailBox;
+    private ArrayList<RelativeLayout> fillBoxes;
+
+    // Database helpers
+    private DBHelper dbHelper;
+    private UsersDAO mUserDAO;
+    private List<User> userList;
 
     public Signup() {
         // Required empty public constructor
@@ -60,6 +86,8 @@ public class Signup extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        mUserDAO = new UsersDAO(getActivity());
+        userList = mUserDAO.getAllUsers();
     }
 
     @Override
@@ -70,11 +98,44 @@ public class Signup extends Fragment {
 
         Button signup = v.findViewById(R.id.signupBtnSignup);
 
+        // Get text fill-in fields and add them to list for parsing
+        usernameBox = (RelativeLayout) v.findViewById(R.id.usernameBox);
+        passwordBox = (RelativeLayout) v.findViewById(R.id.passwordBox);
+        retypePasswordBox = (RelativeLayout) v.findViewById(R.id.passwordRetypeBox);
+        emailBox = (RelativeLayout) v.findViewById(R.id.emailBox);
+        fillBoxes = new ArrayList<RelativeLayout>();
+        fillBoxes.add(usernameBox);
+        fillBoxes.add(passwordBox);
+        fillBoxes.add(retypePasswordBox);
+        fillBoxes.add(emailBox);
+
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, new Login()).commit();
+
+                if (validateInputs()) {
+
+                    String username = ((EditText) getView().findViewById(R.id.usernameEditTextSignup)).getText().toString();
+                    String password = ((EditText) getView().findViewById(R.id.passwordEditTextSignup)).getText().toString();
+                    String email = ((EditText) getView().findViewById(R.id.emailEditTextSignup)).getText().toString();
+
+                    User user = mUserDAO.createUser(username, password, email);
+
+                    //TODO: Delete after checking username is in database
+                    User userCheck = mUserDAO.getUserByID(user.getId());
+
+                    Log.e(TAG, "User created with. ID#" + userCheck.getId() +
+                            "\nUsername: " +  userCheck.getUsername() +
+                            "\nPassword: " + userCheck.getPassword() +
+                            "\nEmail: " + userCheck.getEmail());
+
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, new Login()).commit();
+                }
+                else
+                {
+
+                }
             }
         });
 
@@ -118,5 +179,90 @@ public class Signup extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private boolean validateInputs()
+    {
+        boolean allGood = true;
+
+        for(RelativeLayout box : fillBoxes)
+        {
+            EditText textBox = (EditText) box.getChildAt(0);
+            String inputText = textBox.getText().toString();
+            ImageView errorImage = (ImageView) box.getChildAt(1);
+
+            // Check for no inputs in each box
+            if (inputText.length() == 0) {
+                errorImage.setVisibility(View.VISIBLE);
+                allGood = false;
+            }
+            else
+            {
+                errorImage.setVisibility(View.INVISIBLE);
+            }
+        }
+
+        // Check for username viability
+        String username = ((EditText) getView().findViewById(R.id.usernameEditTextSignup))
+                .getText().toString();
+        // Check if Username is over 6 Characters
+        if (username.length() < 6)
+        {
+            allGood = false;
+            Toast.makeText(getActivity(), "Username is too short.", Toast.LENGTH_SHORT).show();
+            usernameBox.getChildAt(1).setVisibility(View.VISIBLE);
+        }
+
+        // Check if Username Exists
+        for(User user : userList)
+        {
+            if (user.getUsername().equals(username)) {
+                Toast.makeText(getActivity(), "Username taken", Toast.LENGTH_SHORT).show();
+                usernameBox.getChildAt(1).setVisibility(View.VISIBLE);
+                allGood = false;
+            }
+        }
+        // Check for password viability
+        String password = ((EditText) getView().findViewById(R.id.passwordEditTextSignup))
+                .getText().toString();
+        String retypePass = ((EditText) getView().findViewById(R.id.reEnterPassordEditText))
+                .getText().toString();
+
+        // Check if password is over 4 characters
+        if (password.length() < 6)
+        {
+            allGood = false;
+            Toast.makeText(getActivity(), "Password is too short.", Toast.LENGTH_SHORT).show();
+            passwordBox.getChildAt(1).setVisibility(View.VISIBLE);
+        }
+        // Check if passwords match
+        if (!password.equals(retypePass))
+        {
+            allGood = false;
+            Toast.makeText(getActivity(),"Passwords do not match.", Toast.LENGTH_SHORT).show();
+            passwordBox.getChildAt(1).setVisibility(View.VISIBLE);
+            retypePasswordBox.getChildAt(1).setVisibility(View.VISIBLE);
+        }
+
+        //Check for email viability
+        if (!Patterns.EMAIL_ADDRESS.matcher(((EditText)emailBox.getChildAt(0))
+                .getText().toString()).matches())
+        {
+            allGood = false;
+            Toast.makeText(getActivity(), "Invalid email address.", Toast.LENGTH_SHORT).show();
+            emailBox.getChildAt(1).setVisibility(View.VISIBLE);
+        }
+
+        // Reset all error images if correct
+        if (allGood)
+        {
+            for(RelativeLayout box : fillBoxes)
+            {
+                ImageView errorImage = (ImageView) box.getChildAt(1);
+                errorImage.setVisibility(View.INVISIBLE);
+            }
+        }
+
+        return allGood;
     }
 }

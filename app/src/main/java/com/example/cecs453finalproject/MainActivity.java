@@ -1,24 +1,23 @@
 package com.example.cecs453finalproject;
 
 //import android.app.FragmentManager;
-import android.support.v4.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.view.MenuItem;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Login.OnFragmentInteractionListener,
         Signup.OnFragmentInteractionListener, AppSettings.OnFragmentInteractionListener,
-        Expenses.OnFragmentInteractionListener, Reports.OnFragmentInteractionListener {
+        Expenses.OnFragmentInteractionListener, Reports.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +25,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -86,32 +84,21 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
 
         if (id == R.id.nav_home) {
-
-          fragment = new Login();
-
+            fragment = new Login();
         } else if (id == R.id.nav_signup) {
-
             fragment = new Signup();
-
         } else if (id == R.id.nav_settings) {
-
             fragment = new AppSettings();
-
         } else if (id == R.id.nav_expenses) {
-
             fragment = new Expenses();
-
         } else if (id == R.id.nav_reports) {
-
             fragment = new Reports();
         }
 
-        // Begin fragment transaction to open new fragment, if fragment var is not null.
         if(fragment != null) {
-
+//            FragmentManager fragmentManager = getFragmentManager();
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, fragment).commit();
-
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -123,4 +110,5 @@ public class MainActivity extends AppCompatActivity
     public void onFragmentInteraction(Uri uri) {
 
     }
+
 }
