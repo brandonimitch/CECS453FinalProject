@@ -15,6 +15,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.cecs453finalproject.database.DBHelper;
+import com.example.cecs453finalproject.fragments.AppSettings;
+import com.example.cecs453finalproject.fragments.DailyExpense;
+import com.example.cecs453finalproject.fragments.ExpenseItem;
+import com.example.cecs453finalproject.fragments.Expenses;
+import com.example.cecs453finalproject.fragments.Login;
+import com.example.cecs453finalproject.fragments.MonthlyIncome;
+import com.example.cecs453finalproject.fragments.Reports;
+import com.example.cecs453finalproject.fragments.Signup;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Login.OnFragmentInteractionListener,
@@ -92,6 +100,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = null;
 
         if (id == R.id.nav_home) {
@@ -107,8 +116,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         if(fragment != null) {
-//            FragmentManager fragmentManager = getFragmentManager();
-            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.popBackStack();
             fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, fragment).commit();
         }
 

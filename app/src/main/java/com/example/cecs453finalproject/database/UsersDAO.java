@@ -7,6 +7,9 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.example.cecs453finalproject.classes.Transaction;
+import com.example.cecs453finalproject.classes.User;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,7 +72,6 @@ public class UsersDAO {
 
     public void deleteUser(User user)
     {
-
         long id = user.getId();
 
         TransactionDAO transactionDAO = new TransactionDAO(mContext);
@@ -86,18 +88,15 @@ public class UsersDAO {
         Log.d(TAG, "User deleted with id " + id);
         mDatabase.delete(DBHelper.TABLE_USERS, DBHelper.COLUMN_USER_ID
                 + " = " + id, null);
-
     }
 
     public List<User> getAllUsers()
     {
 
         List<User> listUser = new ArrayList<User>();
-        Cursor cursor = mDatabase.query(DBHelper.TABLE_USERS, mAllColumns,
-                null, null, null, null, null);
-        if (cursor != null)
+        Cursor cursor = mDatabase.rawQuery("SELECT * FROM " + DBHelper.TABLE_USERS, null);
+        if (cursor.moveToFirst())
         {
-            cursor.moveToFirst();
             while (!cursor.isAfterLast())
             {
                 User user = cursorToUser(cursor);
@@ -106,6 +105,7 @@ public class UsersDAO {
             }
             cursor.close();
         }
+
         return listUser;
 
     }

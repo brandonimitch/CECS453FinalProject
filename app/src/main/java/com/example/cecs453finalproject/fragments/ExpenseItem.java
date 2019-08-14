@@ -1,47 +1,37 @@
-package com.example.cecs453finalproject;
+package com.example.cecs453finalproject.fragments;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.cecs453finalproject.database.Transaction;
-import com.example.cecs453finalproject.database.TransactionDAO;
-import com.example.cecs453finalproject.database.UsersDAO;
-
-import java.util.List;
+import com.example.cecs453finalproject.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Expenses.OnFragmentInteractionListener} interface
+ * {@link ExpenseItem.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link Expenses#newInstance} factory method to
+ * Use the {@link ExpenseItem#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClickListener{
+public class ExpenseItem extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String USER_ID = "param1";
-    private static final String USERNAME = "param2";
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private Long mUserID;
-    private String mUsername;
+    private String mParam1;
+    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    private TransactionDAO mTransactionDAO;
-    private UsersDAO mUserDAO;
-    private List<Transaction> mTransactionList;
-    private RecyclerView mItemsList;
 
-    public Expenses() {
+    public ExpenseItem() {
         // Required empty public constructor
     }
 
@@ -51,14 +41,14 @@ public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClic
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Expenses.
+     * @return A new instance of fragment ExpenseItem.
      */
     // TODO: Rename and change types and number of parameters
-    public static Expenses newInstance(long param1, String param2) {
-        Expenses fragment = new Expenses();
+    public static ExpenseItem newInstance(String param1, String param2) {
+        ExpenseItem fragment = new ExpenseItem();
         Bundle args = new Bundle();
-        args.putLong(USER_ID, param1);
-        args.putString(USERNAME, param2);
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,33 +57,16 @@ public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClic
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mUserID = getArguments().getLong(USER_ID);
-            mUsername = getArguments().getString(USERNAME);
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        mTransactionDAO = new TransactionDAO(getActivity());
-        mUserDAO = new UsersDAO(getActivity());
-        mTransactionList = mTransactionDAO.getUserTransactions(mUserID);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_expenses, container, false);
-        mItemsList = (RecyclerView) v.findViewById(R.id.expense_recycler_view);
-        mItemsList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        final MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(mTransactionList, this);
-        mItemsList.setAdapter(adapter);
-
-        //TODO: DELETE AFTER TESTING IS COMPLETE
-        Transaction newTransaction = mTransactionDAO.createTransaction(mUserID,"7/7/2019", "Test Expense",
-                "Category", -1, 100.00);
-        mTransactionList.add(newTransaction);
-
-        mTransactionDAO.deleteAllUserTransactions(mUserID);
-
-        return v;
+        return inflater.inflate(R.layout.fragment_expense_item, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -118,11 +91,6 @@ public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClic
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    @Override
-    public void onItemClick(View view, int position) {
-
     }
 
     /**

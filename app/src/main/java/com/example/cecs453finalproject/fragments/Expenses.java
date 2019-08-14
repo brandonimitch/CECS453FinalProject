@@ -1,42 +1,53 @@
-package com.example.cecs453finalproject;
+package com.example.cecs453finalproject.fragments;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
+
+import com.example.cecs453finalproject.R;
+import com.example.cecs453finalproject.adapters.MyRecyclerViewAdapter;
+import com.example.cecs453finalproject.classes.Category;
+import com.example.cecs453finalproject.classes.Transaction;
+import com.example.cecs453finalproject.database.CategoryDAO;
+import com.example.cecs453finalproject.database.TransactionDAO;
+import com.example.cecs453finalproject.database.UsersDAO;
+
+import java.util.List;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MonthlyIncome.OnFragmentInteractionListener} interface
+ * {@link Expenses.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MonthlyIncome#newInstance} factory method to
+ * Use the {@link Expenses#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MonthlyIncome extends Fragment {
+public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String USER_ID = "param1";
+    private static final String USERNAME = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    // Create variables for control objects.
-    private EditText monthlyIncomeEdTxt;
-    private Button monthlyIncomeBtn;
-    private String monthlyIncomeEntered;
+    private Long mUserID;
+    private String mUsername;
 
     private OnFragmentInteractionListener mListener;
+    private TransactionDAO mTransactionDAO;
+    private UsersDAO mUserDAO;
+    private CategoryDAO mCategoryDAO;
+    private List<Transaction> mTransactionList;
+    private List<Category> mCategoryList;
+    private RecyclerView mItemsList;
 
-    public MonthlyIncome() {
+    public Expenses() {
         // Required empty public constructor
     }
 
@@ -46,14 +57,14 @@ public class MonthlyIncome extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MonthlyIncome.
+     * @return A new instance of fragment Expenses.
      */
     // TODO: Rename and change types and number of parameters
-    public static MonthlyIncome newInstance(String param1, String param2) {
-        MonthlyIncome fragment = new MonthlyIncome();
+    public static Expenses newInstance(long param1, String param2) {
+        Expenses fragment = new Expenses();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putLong(USER_ID, param1);
+        args.putString(USERNAME, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,29 +73,37 @@ public class MonthlyIncome extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mUserID = getArguments().getLong(USER_ID);
+            mUsername = getArguments().getString(USERNAME);
         }
+
+        mTransactionDAO = new TransactionDAO(getActivity());
+        mUserDAO = new UsersDAO(getActivity());
+        mCategoryDAO = new CategoryDAO(getActivity());
+        mTransactionList = mTransactionDAO.getUserTransactions(mUserID);
+        mCategoryList = mCategoryDAO.getUserCategories(mUserID);
+        // TODO: DELETE AFTER TESTING
+        mCategoryDAO.deleteAllUserCategories(mUserID);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_monthly_income, container, false);
+        View v = inflater.inflate(R.layout.fragment_expenses, container, false);
+        mItemsList = (RecyclerView) v.findViewById(R.id.expense_recycler_view);
+        mItemsList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        final MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(this, mTransactionList,
+                mCategoryList,this);
 
-        monthlyIncomeEdTxt = v.findViewById(R.id.monthlyIncomeEditText);
-        monthlyIncomeBtn = v.findViewById(R.id.monthlyIncomeBtn);
+        mItemsList.setAdapter(adapter);
 
-        monthlyIncomeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        //TODO: DELETE AFTER TESTING IS COMPLETE
+        Transaction newTransaction = mTransactionDAO.createTransaction(mUserID,"7/7/2019",
+                "Test Expense","Category", -1, 100.00);
+        mTransactionList.add(newTransaction);
 
-                monthlyIncomeEntered = monthlyIncomeEdTxt.getText().toString();
-
-                //// TODO: ADD FUNCTIONALITY TO SEND EDIT TXT INFO (monthlyIncomeEntered) TO DATABASE //////////
-            }
-        });
+        mTransactionDAO.deleteAllUserTransactions(mUserID);
 
         return v;
     }
@@ -111,6 +130,11 @@ public class MonthlyIncome extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+
     }
 
     /**

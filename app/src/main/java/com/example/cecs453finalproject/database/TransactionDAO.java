@@ -7,6 +7,9 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.example.cecs453finalproject.classes.Transaction;
+import com.example.cecs453finalproject.classes.User;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,17 +93,19 @@ public class TransactionDAO {
     {
         List<Transaction> listTransaction = new ArrayList<Transaction>();
 
-        Cursor cursor = mDatabase.query(DBHelper.TABLE_TRANSACTIONS, mAllColumns,
-                null, null, null, null, null);
+        Cursor cursor = mDatabase.rawQuery("SELECT * FROM " + DBHelper.TABLE_TRANSACTIONS, null);
 
-        cursor.moveToFirst();
-
-        while (!cursor.isAfterLast())
+        if(cursor.moveToFirst())
         {
-            Transaction transaction = cursorToTransaction(cursor);
-            listTransaction.add(transaction);
-            cursor.moveToNext();
+            while (!cursor.isAfterLast())
+            {
+                Transaction transaction = cursorToTransaction(cursor);
+                listTransaction.add(transaction);
+                cursor.moveToNext();
+            }
+
         }
+
         cursor.close();
         return listTransaction;
 

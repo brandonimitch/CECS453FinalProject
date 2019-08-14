@@ -15,26 +15,30 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:padding="5dp" />
+            android:padding="5dp"
+            android:textSize="@dimen/transaction_text_size" />
 
         <TextView
             android:id="@+id/trans_descr"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:padding="5dp" />
+            android:padding="5dp"
+            android:textSize="@dimen/transaction_text_size"/>
 
-        <TextView
+        <Spinner
             android:id="@+id/trans_category"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:padding="5dp" />
+            android:padding="5dp"
+            android:textSize="@dimen/transaction_text_size"/>
 
         <TextView
             android:id="@+id/trans_amount"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:padding="5dp" />
+            android:padding="5dp"
+            android:textSize="@dimen/transaction_text_size"/>
     </LinearLayout>
