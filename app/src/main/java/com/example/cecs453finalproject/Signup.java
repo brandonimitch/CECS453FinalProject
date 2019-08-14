@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.example.cecs453finalproject.database.DBHelper;
 import com.example.cecs453finalproject.database.User;
 import com.example.cecs453finalproject.database.UsersDAO;
 
@@ -53,7 +52,6 @@ public class Signup extends Fragment {
     private ArrayList<RelativeLayout> fillBoxes;
 
     // Database helpers
-    private DBHelper dbHelper;
     private UsersDAO mUserDAO;
     private List<User> userList;
 

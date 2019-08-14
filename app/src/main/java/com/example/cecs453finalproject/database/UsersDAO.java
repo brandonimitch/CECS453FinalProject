@@ -128,6 +128,26 @@ public class UsersDAO {
 
     }
 
+    public User getUserByUsername(String username)
+    {
+        Cursor cursor = mDatabase.query(DBHelper.TABLE_USERS, mAllColumns,
+                DBHelper.COLUMN_USERNAME + " = ?",
+                new String[] { username }, null, null, null);
+        User user;
+
+        if (cursor != null && cursor.getCount() > 0)
+        {
+            cursor.moveToFirst();
+            user = cursorToUser(cursor);
+        }
+        else
+        {
+            user = null;
+        }
+
+        return user;
+    }
+
     protected User cursorToUser(Cursor cursor)
     {
 

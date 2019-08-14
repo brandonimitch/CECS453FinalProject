@@ -5,12 +5,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.cecs453finalproject.database.User;
 import com.example.cecs453finalproject.database.UsersDAO;
+
+import java.util.List;
 
 
 /**
@@ -26,6 +32,7 @@ public class Login extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "LoginActivity";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -34,6 +41,7 @@ public class Login extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private UsersDAO mUserDAO;
+    private List<User> userList;
 
     public Login() {
         // Required empty public constructor
@@ -64,6 +72,7 @@ public class Login extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -72,9 +81,22 @@ public class Login extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_login, container, false);
 
+        mUserDAO = new UsersDAO(getActivity());
+        userList = mUserDAO.getAllUsers();
+
+        //TODO: DELETE WHEN TESTING PHASE IS OVER
+        for (User user : userList)
+        {
+            Log.e(TAG,"ID: " + user.getId() +
+                    "\nUsername: " + user.getUsername() +
+                    "\nPassword: " + user.getPassword() +
+                    "\nEmail: " + user.getEmail()+"\n");
+        }
+
         Button signup = v.findViewById(R.id.signupBtnLogin);
         Button login = v.findViewById(R.id.loginBtnLogin);
 
+        // Control fragment when SignUp Button is clicked
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,9 +105,48 @@ public class Login extends Fragment {
             }
         });
 
+        // Control Fragment when Login Button is clicked
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                //TODO: DELETE AFTER TESTING IS COMPELETE
+                EditText userTest = (EditText) getView().findViewById(R.id.userNameEditTextLogin);
+                EditText passTest = (EditText) getView().findViewById(R.id.passwordEditTextLogin);
+                userTest.setText("testUser");
+                passTest.setText("password");
+
+                String username = ((EditText) getView().findViewById(R.id.userNameEditTextLogin))
+                        .getText().toString();
+                User checkUser = mUserDAO.getUserByUsername(username);
+
+                if (verifyCredentials(checkUser))
+                {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    Fragment expenses = Expenses.newInstance(checkUser.getId(), username);
+                    fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, expenses).commit();
+                }
+            }
+        });
 
         return v;
+    }
+
+    private boolean verifyCredentials(User checkUser) {
+
+        String password = ((EditText) getView().findViewById(R.id.passwordEditTextLogin))
+                .getText().toString();
+
+        if (checkUser != null)
+        {
+            if (checkUser.getPassword().equals(password))
+            {
+                return true;
+            }
+        }
+
+        Toast.makeText(getActivity(), "Username/Password does not exist", Toast.LENGTH_SHORT).show();
+        return false;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

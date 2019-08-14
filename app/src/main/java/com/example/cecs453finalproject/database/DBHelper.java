@@ -9,7 +9,7 @@ import android.util.Log;
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DBHelper";
-    private static final String DB_NAME = "expense_tracker.db";
+    private static final String DB_NAME = "CECS453_Final_Expense_Tracker.db";
     private static final int DB_VERSION = 1;
 
     public static final String TABLE_USERS = "users";

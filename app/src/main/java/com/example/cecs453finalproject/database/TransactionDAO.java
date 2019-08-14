@@ -23,7 +23,8 @@ public class TransactionDAO {
             DBHelper.COLUMN_TRANSACTION_DESCRIPTION,
             DBHelper.COLUMN_TRANSACTION_CATEGORY,
             DBHelper.COLUMN_TRANSACTION_TYPE,
-            DBHelper.COLUMN_TRANSACTION_AMOUNT };
+            DBHelper.COLUMN_TRANSACTION_AMOUNT,
+            DBHelper.COLUMN_TRANSACTION_USER_ID};
 
     public TransactionDAO(Context context)
     {
@@ -51,15 +52,16 @@ public class TransactionDAO {
         mDbHelper.close();
     }
 
-    public Transaction createTransaction(String date, String descr, String category, int type, double amt)
+    public Transaction createTransaction(long userID, String date, String description, String category, int type, double amt)
     {
 
         ContentValues values = new ContentValues();
         values.put(DBHelper.COLUMN_TRANSACTION_DATE, date);
-        values.put(DBHelper.COLUMN_TRANSACTION_DESCRIPTION, descr);
+        values.put(DBHelper.COLUMN_TRANSACTION_DESCRIPTION, description);
         values.put(DBHelper.COLUMN_TRANSACTION_CATEGORY, category);
         values.put(DBHelper.COLUMN_TRANSACTION_TYPE, type);
         values.put(DBHelper.COLUMN_TRANSACTION_AMOUNT, amt);
+        values.put(DBHelper.COLUMN_TRANSACTION_USER_ID, userID);
         long insertId = mDatabase
                 .insert(DBHelper.TABLE_TRANSACTIONS, null, values);
         Cursor cursor = mDatabase.query(DBHelper.TABLE_TRANSACTIONS, mAllColumns,
@@ -74,10 +76,14 @@ public class TransactionDAO {
     public void deleteTransaction(Transaction transaction)
     {
         long id = transaction.getId();
-        Log.d(TAG, "Transactoin deleted with id: " + id);
+        Log.d(TAG, "Transaction deleted with id: " + id);
         mDatabase.delete(DBHelper.TABLE_TRANSACTIONS,
                 DBHelper.COLUMN_TRANSACTION_ID + " = " + id, null);
+    }
 
+    public void deleteAllUserTransactions(long userID)
+    {
+        mDatabase.delete(DBHelper.TABLE_TRANSACTIONS, DBHelper.COLUMN_TRANSACTION_USER_ID + "=" + Long.toString(userID), null);
     }
 
     public List<Transaction> getUserTransactions(long userID)

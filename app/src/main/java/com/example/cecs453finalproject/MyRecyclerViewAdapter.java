@@ -9,14 +9,14 @@ import android.widget.TextView;
 
 import com.example.cecs453finalproject.database.Transaction;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
-    private ArrayList<Transaction> mData;
+    private List<Transaction> mData;
     private ItemClickListener mClickListener;
 
-    public MyRecyclerViewAdapter(ArrayList<Transaction> data, ItemClickListener clickListener) {
+    public MyRecyclerViewAdapter(List<Transaction> data, ItemClickListener clickListener) {
         this.mData = data;
         this.mClickListener = clickListener;
     }
