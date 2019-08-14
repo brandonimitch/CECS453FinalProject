@@ -16,9 +16,22 @@
     <string name="title_activity_splash">SplashActivity</string>
 
     <string name="add_edit_expense_btn">Add / Edit Daily Expense</string>
-    <string name="add_edit_expense_item_btn">Add / Edit Expense Item</string>
+    <string name="add_edit_expense_item_btn">Add / Edit Expense Category</string>
     <string name="add_edit_monthly_income_btn">Add / Edit Monthly Income</string>
 
+    <string name="text_color">#B4AB8E</string>
+    <string name="expense_category">Expense Categories / Add Category</string>
+    <string name="edit_category">Enter Category to be Edited</string>
+    <string name="original_category">Enter Original Category</string>
+    <string name="new_category">Enter New Category Name</string>
+    <string name="submit_button">Submit</string>
+    <string name="enter_new_category">Enter Name for New Category to be Added</string>
+    <string name="re_enter_category">Re-Enter New Category Name</string>
+    <string name="edit_daily_expense">Add / Edit Daily Expense</string>
+    <string name="enter_expense_amount">Enter New Expense Amount</string>
+
+    <string name="monthly_income">Add / Edit Monthly Income</string>
+    <string name="monthly_income_amount">Enter Monthly Income Amount</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
