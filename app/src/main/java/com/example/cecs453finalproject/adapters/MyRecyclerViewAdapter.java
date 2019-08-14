@@ -75,7 +75,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 if (item.equals("Add new")){
                     FragmentManager fragmentManager = mFragment.getFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer,
-                            new ExpenseItem()).commit();
+                            new ExpenseItem()).addToBackStack("Expenses").commit();
                 }
                 else
                 {
