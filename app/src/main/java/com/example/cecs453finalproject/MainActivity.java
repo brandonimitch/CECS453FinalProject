@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity
     DBHelper dbHelper;
     private String loggedInUsername;
     private long loggedInUserId;
+    private boolean showOptionsMenu = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,11 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return showOptionsMenu;
     }
 
     @Override
@@ -161,9 +167,13 @@ public class MainActivity extends AppCompatActivity
     public void setDrawerLocked(boolean enabled) {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (enabled) {
+            invalidateOptionsMenu();
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            showOptionsMenu = false;
         } else {
+            invalidateOptionsMenu();
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            showOptionsMenu = true;
         }
     }
 
