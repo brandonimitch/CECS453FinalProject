@@ -15,6 +15,11 @@
     <string name="menu_send">Send</string>
     <string name="title_activity_splash">SplashActivity</string>
 
+    <string name="add_edit_expense_btn">Add / Edit Daily Expense</string>
+    <string name="add_edit_expense_item_btn">Add / Edit Expense Item</string>
+    <string name="add_edit_monthly_income_btn">Add / Edit Monthly Income</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

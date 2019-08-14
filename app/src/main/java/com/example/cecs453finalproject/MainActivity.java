@@ -19,7 +19,9 @@ import com.example.cecs453finalproject.database.DBHelper;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Login.OnFragmentInteractionListener,
         Signup.OnFragmentInteractionListener, AppSettings.OnFragmentInteractionListener,
-        Expenses.OnFragmentInteractionListener, Reports.OnFragmentInteractionListener{
+        Expenses.OnFragmentInteractionListener, Reports.OnFragmentInteractionListener,
+        ExpenseItem.OnFragmentInteractionListener, DailyExpense.OnFragmentInteractionListener,
+        MonthlyIncome.OnFragmentInteractionListener{
 
     DBHelper dbHelper;
 
@@ -43,7 +45,6 @@ public class MainActivity extends AppCompatActivity
 
         if(savedInstanceState == null) {
             fragment = new Login();
-//            FragmentManager fragmentManager = getFragmentManager();
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, fragment).commit();
 
@@ -76,8 +77,12 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, new AppSettings()).commit();
         }
+
+
 
         return super.onOptionsItemSelected(item);
     }
