@@ -17,7 +17,9 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Login.OnFragmentInteractionListener,
         Signup.OnFragmentInteractionListener, AppSettings.OnFragmentInteractionListener,
-        Expenses.OnFragmentInteractionListener, Reports.OnFragmentInteractionListener{
+        Expenses.OnFragmentInteractionListener, Reports.OnFragmentInteractionListener,
+        ExpenseItem.OnFragmentInteractionListener, DailyExpense.OnFragmentInteractionListener,
+        MonthlyIncome.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
