@@ -117,12 +117,17 @@ public class UsersDAO {
                 DBHelper.COLUMN_USER_ID + " = ?",
                 new String[] { String.valueOf(id) }, null, null, null);
 
-        if (cursor != null)
+        User user;
+
+        if (cursor != null && cursor.getCount() > 0)
         {
             cursor.moveToFirst();
+            user = cursorToUser(cursor);
         }
-
-        User user = cursorToUser(cursor);
+        else
+        {
+            user = null;
+        }
 
         return user;
 

@@ -18,12 +18,14 @@ import com.example.cecs453finalproject.classes.Transaction;
 import com.example.cecs453finalproject.classes.User;
 import com.example.cecs453finalproject.fragments.ExpenseItem;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
     private static final String TAG = "MyRecyclerViewAdapter";
+    private NumberFormat nf = NumberFormat.getCurrencyInstance();
 
     private List<Transaction> mData;
     private List<Category> mCategories;
@@ -44,15 +46,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_transaction,
                 parent, false);
-        ArrayList<String> categories = new ArrayList<>();
 
-        for (Category cat : mCategories)
-        {
-            categories.add(cat.getName());
-        }
-
-        spinnerAdapter = new CategorySpinnerAdapter(view.getContext(),
-                android.R.layout.simple_spinner_dropdown_item, categories);
         return new ViewHolder(view, mClickListener);
     }
 
@@ -61,9 +55,30 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         Transaction data = mData.get(position);
         double amount = data.getAmount() * (double) data.getType();
 
+        ArrayList<String> categories = new ArrayList<>();
+
+        for (Category cat : mCategories)
+        {
+            categories.add(cat.getName());
+        }
+
+        // Place Add new at back of list
+        if (categories.contains("Add new"))
+        {
+            categories.remove("Add new");
+            categories.add(categories.size()-1,"Add new");
+        }
+        else
+        {
+            categories.add("Add new");
+        }
+
+        spinnerAdapter = new CategorySpinnerAdapter(holder.mCategoryText.getContext(),
+                android.R.layout.simple_spinner_dropdown_item, categories);
+
         holder.mDateText.setText(data.getDate());
         holder.mDescrText.setText(data.getDescr());
-        holder.mAmountText.setText(Double.toString(amount));
+        holder.mAmountText.setText(nf.format(data.getAmount()*data.getType()));
 
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         holder.mCategoryText.setAdapter(spinnerAdapter);
@@ -140,9 +155,5 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         void onItemClick(View view, int position);
     }
 
-    public interface CategorySelectedListener
-    {
-        void onCategorySelected(View view, int position);
-    }
 
 }

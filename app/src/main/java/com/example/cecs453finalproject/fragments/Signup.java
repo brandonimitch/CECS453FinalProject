@@ -120,13 +120,14 @@ public class Signup extends Fragment {
 
                     User user = mUserDAO.createUser(username, password, email);
 
-                    //TODO: Delete after checking username is in database
+                    // TODO: Delete after checking username is in database
                     User userCheck = mUserDAO.getUserByID(user.getId());
 
                     Log.e(TAG, "User created with. ID#" + userCheck.getId() +
                             "\nUsername: " +  userCheck.getUsername() +
                             "\nPassword: " + userCheck.getPassword() +
                             "\nEmail: " + userCheck.getEmail());
+                    // TODO: TO HERE
 
                     FragmentManager fragmentManager = getFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, new Login()).commit();

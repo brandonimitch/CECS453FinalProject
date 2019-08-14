@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.cecs453finalproject.MainActivity;
 import com.example.cecs453finalproject.R;
 import com.example.cecs453finalproject.classes.User;
 import com.example.cecs453finalproject.database.UsersDAO;
@@ -75,6 +76,7 @@ public class Login extends Fragment {
         }
         mUserDAO = new UsersDAO(getActivity());
         userList = mUserDAO.getAllUsers();
+
     }
 
     @Override
@@ -82,6 +84,9 @@ public class Login extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_login, container, false);
+
+        // Make drawer invisible until login is successful
+        ((MainActivity) getActivity()).setDrawerLocked(true);
 
         //TODO: DELETE WHEN TESTING PHASE IS OVER
         for (User user : userList)
@@ -91,6 +96,7 @@ public class Login extends Fragment {
                     "\nPassword: " + user.getPassword() +
                     "\nEmail: " + user.getEmail()+"\n");
         }
+        // TODO: TO HERE
 
         Button signup = v.findViewById(R.id.signupBtnLogin);
         Button login = v.findViewById(R.id.loginBtnLogin);
@@ -114,6 +120,7 @@ public class Login extends Fragment {
                 EditText passTest = (EditText) getView().findViewById(R.id.passwordEditTextLogin);
                 userTest.setText("testUser");
                 passTest.setText("password");
+                // TODO: TO HERE
 
                 String username = ((EditText) getView().findViewById(R.id.userNameEditTextLogin))
                         .getText().toString();
@@ -121,9 +128,11 @@ public class Login extends Fragment {
 
                 if (verifyCredentials(checkUser))
                 {
+                    // Allow User to access navigation drawer
+                    ((MainActivity) getActivity()).setDrawerLocked(false);
+
                     FragmentManager fragmentManager = getFragmentManager();
-                    Fragment expenses = Expenses.newInstance(checkUser.getId(), username);
-                    fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, expenses).commit();
+                    fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, new Expenses()).commit();
                 }
             }
         });
