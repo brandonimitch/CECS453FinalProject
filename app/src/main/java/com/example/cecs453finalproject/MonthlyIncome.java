@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 
 /**
@@ -26,6 +28,11 @@ public class MonthlyIncome extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    // Create variables for control objects.
+    private EditText monthlyIncomeEdTxt;
+    private Button monthlyIncomeBtn;
+    private String monthlyIncomeEntered;
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,7 +71,22 @@ public class MonthlyIncome extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_monthly_income, container, false);
+        View v = inflater.inflate(R.layout.fragment_monthly_income, container, false);
+
+        monthlyIncomeEdTxt = v.findViewById(R.id.monthlyIncomeEditText);
+        monthlyIncomeBtn = v.findViewById(R.id.monthlyIncomeBtn);
+
+        monthlyIncomeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                monthlyIncomeEntered = monthlyIncomeEdTxt.getText().toString();
+
+                //// TODO: ADD FUNCTIONALITY TO SEND EDIT TXT INFO (monthlyIncomeEntered) TO DATABASE //////////
+            }
+        });
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
