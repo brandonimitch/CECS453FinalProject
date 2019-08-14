@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.cecs453finalproject.database.UsersDAO;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +32,8 @@ public class Login extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private UsersDAO mUserDAO;
 
     public Login() {
         // Required empty public constructor
@@ -78,6 +82,8 @@ public class Login extends Fragment {
                 fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, new Signup()).commit();
             }
         });
+
+
 
         return v;
     }
