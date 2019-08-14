@@ -3,10 +3,13 @@ package com.example.cecs453finalproject;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -86,7 +89,51 @@ public class DailyExpense extends Fragment {
         expenseAmount = v.findViewById(R.id.dailyExpenseEditText2);
         dailyExpenseBtn = v.findViewById(R.id.dailyExpenseBtn);
 
+
+        /*
+        *   Adapter class to convert data for recycler view and spinner.
+        * */
+        class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordViewHolder> {
+
+
+            @NonNull
+            @Override
+            public WordViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+                return null;
+            }
+
+            @Override
+            public void onBindViewHolder(@NonNull WordViewHolder wordViewHolder, int i) {
+
+            }
+
+            @Override
+            public int getItemCount() {
+                return 0;
+            }
+
+            /*
+            *   View Holder class for converting to recycler view or spinner.
+            * */
+            class WordViewHolder extends RecyclerView.ViewHolder {
+
+                public WordViewHolder(@NonNull View itemView) {
+                    super(itemView);
+                }
+            }
+        }
+
+
+
         spinner = v.findViewById(R.id.dailyExpenseSpinner);
+//        // Create an ArrayAdapter using the string array and a default spinner layout
+//        WordListAdapter<CharSequence> adapter = WordListAdapter.createFromResource(this,
+//                R.array.planets_array, android.R.layout.simple_spinner_item);
+//        // Specify the layout to use when the list of choices appears
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        // Apply the adapter to the spinner
+//        spinner.setAdapter(adapter);
+
 
         dailyExpenseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
