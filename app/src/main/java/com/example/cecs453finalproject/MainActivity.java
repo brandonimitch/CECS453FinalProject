@@ -1,6 +1,18 @@
 package com.example.cecs453finalproject;
 
-//import android.app.FragmentManager;
+/*
+*
+* Created on 07/10/19
+* By Tylar Simone and Brandon Mitchell
+* Califonia State University Long Beach.
+* CECS 453
+* Professor Arjang Fahim.
+*
+* Expense Tracker
+*
+* */
+
+
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -35,8 +47,8 @@ import com.example.cecs453finalproject.interfaces.DrawerLocker;
 
 
 /*
-*   Class MainActivity is the activity where all the fragments are displayed. Implements
-*   onFragmentInteractionListener for each fragment in the project.
+*   Class MainActivity is the activity that hosts all the fragments in the project. Implements
+*   onFragmentInteractionListener for each fragment.
 * */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Login.OnFragmentInteractionListener,
