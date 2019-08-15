@@ -131,4 +131,28 @@ public class CategoryDAO {
         return category;
     }
 
+    public boolean updateCategory(long userId, String oldCategory, String newCategory)
+    {
+
+        if (oldCategory.equals(newCategory))
+        {
+            return false;
+        }
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBHelper.COLUMN_CATEGORY_NAME, newCategory);
+        try {
+            mDatabase.update(DBHelper.TABLE_CATEGORIES,
+                    contentValues,
+                    DBHelper.COLUMN_CATEGORY_NAME + " = ? AND " +
+                            DBHelper.COLUMN_CATEGORY_USER_ID + " = " + userId,
+                    new String[]{oldCategory});
+            return true;
+        } catch (SQLException e)
+        {
+            Log.e(TAG, "SQLException while updating database + " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

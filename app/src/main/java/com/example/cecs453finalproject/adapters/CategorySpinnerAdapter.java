@@ -8,9 +8,11 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class CategorySpinnerAdapter extends ArrayAdapter<String> {
 
+    private static final String TAG = "CategorySpinnerAdapter";
     private Context mContext;
     private ArrayList<String> mValues;
 
@@ -18,7 +20,15 @@ public class CategorySpinnerAdapter extends ArrayAdapter<String> {
                                   ArrayList<String> values)
     {
         super(context, textViewResourceId, values);
+        // Add category to first spot as hint
+        if (!values.contains("Category"))
+        {
+            values.add(0,"Category");
+        }
         this.mContext = context;
+        Collections.sort(values.subList(1,values.size()));
+        // Add **Add New** to back
+        values.add("*Add New*");
         this.mValues = values;
     }
 
@@ -64,7 +74,9 @@ public class CategorySpinnerAdapter extends ArrayAdapter<String> {
             // Set the hint text color gray
             tv.setTextColor(Color.GRAY);
         }
-        else {
+        else
+        {
+            tv.setTextColor(Color.BLACK);
         }
         return view;
     }

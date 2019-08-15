@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Spinner
+        <TextView
             android:id="@+id/trans_category"
             android:layout_width="7dp"
             android:layout_height="match_parent"
@@ -50,7 +50,6 @@
             android:gravity="center"
             android:singleLine="true"
             android:textColor="@color/item_text_color"
-            android:backgroundTint="@color/colorPrimaryDark"
             android:textSize="@dimen/transaction_text_size" />
 
         <TextView
