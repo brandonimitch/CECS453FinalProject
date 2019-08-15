@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/expenseCatMasterLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_color"
-    tools:context=".ExpenseItem">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="fragments.AddEditCategory">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/expenseCatTitleTextView"
         android:layout_width="match_parent"
@@ -30,7 +29,6 @@
         android:layout_margin="10dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.07"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +83,7 @@
         app:layout_constraintTop_toBottomOf="@+id/changeCategoryEditText" />
 
     <Button
-        android:id="@+id/categoryChangeBtn"
+        android:id="@+id/categorySubmitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -112,7 +110,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.111"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categoryChangeBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/categorySubmitButton" />
 
     <EditText
         android:id="@+id/newCatEditText"

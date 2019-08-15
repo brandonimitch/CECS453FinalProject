@@ -65,7 +65,6 @@ public class CategorySpinnerAdapter extends ArrayAdapter<String> {
             tv.setTextColor(Color.GRAY);
         }
         else {
-            tv.setTextColor(Color.BLACK);
         }
         return view;
     }
