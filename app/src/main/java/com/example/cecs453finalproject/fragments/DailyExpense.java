@@ -57,13 +57,6 @@ import java.util.regex.Pattern;
 public class DailyExpense extends Fragment implements AdapterView.OnItemSelectedListener {
 
 
-//    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//    private static final String USER_ID = "param1";
-//    private static final String USERNAME = "param2";
-//    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//    private static final String ARG_PARAM1 = "param1";
-//    private static final String ARG_PARAM2 = "param2";
-
     // Fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";

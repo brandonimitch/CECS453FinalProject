@@ -156,6 +156,7 @@ public class Login extends Fragment {
         return v;
     }
 
+    // Verifies that password entered equals the password in the account, if a username is provided.
     private boolean verifyCredentials(User checkUser) {
 
         String password = ((EditText) getView().findViewById(R.id.passwordEditTextLogin))
@@ -173,12 +174,14 @@ public class Login extends Fragment {
         return false;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
     }
+
 
     @Override
     public void onAttach(Context context) {
