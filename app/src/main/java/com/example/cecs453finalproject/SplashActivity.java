@@ -1,5 +1,19 @@
 package com.example.cecs453finalproject;
 
+/*
+ *
+ * Created on 07/10/19
+ * By Tylar Simone and Brandon Mitchell
+ * Califonia State University Long Beach.
+ * CECS 453
+ * Professor Arjang Fahim.
+ *
+ *
+ *
+ * */
+
+
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;

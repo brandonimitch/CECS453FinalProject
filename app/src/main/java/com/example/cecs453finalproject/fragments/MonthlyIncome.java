@@ -1,5 +1,17 @@
 package com.example.cecs453finalproject.fragments;
 
+/*
+ *
+ * Created on 07/10/19
+ * By Tylar Simone and Brandon Mitchell
+ * Califonia State University Long Beach.
+ * CECS 453
+ * Professor Arjang Fahim.
+ *
+ * Expense Tracker
+ *
+ * */
+
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +33,9 @@ import java.text.NumberFormat;
 
 
 /**
+ * MonthlyIncome class provides functionality for the fragment_monthly_income.xml
+ * Users can edit and existing income, or add a new income.
+ *
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * {@link MonthlyIncome.OnFragmentInteractionListener} interface

@@ -1,6 +1,18 @@
 package com.example.cecs453finalproject;
 
-//import android.app.FragmentManager;
+/*
+*
+* Created on 07/10/19
+* By Tylar Simone and Brandon Mitchell
+* Califonia State University Long Beach.
+* CECS 453
+* Professor Arjang Fahim.
+*
+* Expense Tracker
+*
+* */
+
+
 
 import android.net.Uri;
 import android.os.Bundle;

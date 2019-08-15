@@ -55,6 +55,10 @@ public class AddEditExpense extends Fragment implements MyRecyclerViewAdapter.It
     }
 
     /**
+     * AddEditExpense class adds functionality to the layout of fragemnt_addedit_expense.xml.
+     * Allows users to add new expenses and incomes, edit existing expenses and incomes, and
+     * add new expense categories.
+     *
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
@@ -96,7 +100,7 @@ public class AddEditExpense extends Fragment implements MyRecyclerViewAdapter.It
         mItemsList = v.findViewById(R.id.expense_recycler_view);
         mItemsList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        //TODO: DELETE AFTER TESTING IS COMPLETE
+        // Default transactions that are loaded in the absence of any user entered transactions.
         if (mTransactionList.size() == 0)
         {
             Transaction newTransaction0 = mTransactionDAO.createTransaction(mUserID,"07/07/2019",
@@ -119,11 +123,12 @@ public class AddEditExpense extends Fragment implements MyRecyclerViewAdapter.It
             mTransactionList.add(newTransaction4);
             mTransactionList.add(newTransaction5);
         }
-        // TODO: TO HERE
 
+        // Set up recycler view.
         MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(this, mTransactionList,
                 mCategoryList,this);
         mItemsList.setAdapter(adapter);
+
         return v;
     }
 

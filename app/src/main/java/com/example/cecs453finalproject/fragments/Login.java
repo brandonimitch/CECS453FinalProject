@@ -1,5 +1,17 @@
 package com.example.cecs453finalproject.fragments;
 
+/*
+ *
+ * Created on 07/10/19
+ * By Tylar Simone and Brandon Mitchell
+ * Califonia State University Long Beach.
+ * CECS 453
+ * Professor Arjang Fahim.
+ *
+ * Expense Tracker
+ *
+ * */
+
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,7 +22,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,6 +35,8 @@ import java.util.List;
 
 
 /**
+ * Login class provides functionality for the fragment_login.xml layout
+ *
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * {@link Login.OnFragmentInteractionListener} interface
@@ -79,8 +92,6 @@ public class Login extends Fragment {
         mUserDAO = new UsersDAO(getActivity());
         userList = mUserDAO.getAllUsers();
 
-        SaveSharedPreference.setUserName(getContext(),"");
-
     }
 
     @Override
@@ -105,7 +116,6 @@ public class Login extends Fragment {
 
         Button signup = v.findViewById(R.id.signupBtnLogin);
         Button login = v.findViewById(R.id.loginBtnLogin);
-        final CheckBox checkBox = v.findViewById(R.id.saveUsername);
 
         // Control fragment when SignUp Button is clicked
         signup.setOnClickListener(new View.OnClickListener() {
@@ -121,12 +131,6 @@ public class Login extends Fragment {
             @Override
             public void onClick(View v) {
 
- /*              // AutoLogin Button Feature for testing
-                EditText userTest = (EditText) getView().findViewById(R.id.userNameEditTextLogin);
-                EditText passTest = (EditText) getView().findViewById(R.id.passwordEditTextLogin);
-                userTest.setText(userList.get(0).getUsername());
-                passTest.setText(userList.get(0).getPassword());*/
-
                 String username = ((EditText) getView().findViewById(R.id.userNameEditTextLogin))
                         .getText().toString();
                 User checkUser = mUserDAO.getUserByUsername(username);
@@ -139,10 +143,7 @@ public class Login extends Fragment {
                     ((MainActivity) getActivity()).setLoggedInUserId(checkUser.getId());
                     ((MainActivity) getActivity()).setMonthlyIncome(checkUser.getIncome());
 
-                    if (checkBox.isChecked())
-                    {
-                        SaveSharedPreference.setUserName(getContext(), checkUser.getUsername());
-                    }
+                    SaveSharedPreference.setUserName(getContext(), checkUser.getUsername());
 
                     FragmentManager fragmentManager = getFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, new AddEditExpense()).commit();

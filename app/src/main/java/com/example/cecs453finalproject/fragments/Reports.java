@@ -1,5 +1,17 @@
 package com.example.cecs453finalproject.fragments;
 
+/*
+ *
+ * Created on 07/10/19
+ * By Tylar Simone and Brandon Mitchell
+ * Califonia State University Long Beach.
+ * CECS 453
+ * Professor Arjang Fahim.
+ *
+ * Expense Tracker
+ *
+ * */
+
 import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
@@ -27,6 +39,9 @@ import java.util.List;
 
 
 /**
+ * Reports class creates graphs and displays them on the fragment_reports.xml layout.
+ * Provides graphs of expense and income broken down by  month, category, and budget.
+ *
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * {@link Reports.OnFragmentInteractionListener} interface
