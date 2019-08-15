@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity
     private String loggedInUsername;
     private long loggedInUserId;
     private boolean showOptionsMenu = false;
+    private double monthlyIncome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,11 +116,6 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = null;
 
-        Bundle bundle = new Bundle();
-        bundle.putString("username", username);
-        bundle.putLong("customerID", customerId);
-
-
         if (id == R.id.nav_home) {
             loggedInUserId = 0;
             loggedInUsername = null;
@@ -130,17 +126,14 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.nav_settings) {
 
             fragment = new AppSettings();
-            fragment.setArguments(bundle);
 
         } else if (id == R.id.nav_expenses) {
 
             fragment = new Expenses();
-            fragment.setArguments(bundle);
 
         } else if (id == R.id.nav_reports) {
 
             fragment = new Reports();
-            fragment.setArguments(bundle);
         }
 
         if(fragment != null) {
@@ -174,6 +167,14 @@ public class MainActivity extends AppCompatActivity
         this.loggedInUserId = loggedInUserId;
     }
 
+    public double getMonthlyIncome() {
+        return monthlyIncome;
+    }
+
+    public void setMonthlyIncome(double monthlyIncome) {
+        this.monthlyIncome = monthlyIncome;
+    }
+
     @Override
     public void setDrawerLocked(boolean enabled) {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -187,6 +188,8 @@ public class MainActivity extends AppCompatActivity
             showOptionsMenu = true;
         }
     }
+
+
 }
 
 

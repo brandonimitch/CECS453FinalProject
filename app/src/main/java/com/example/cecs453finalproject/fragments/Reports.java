@@ -191,9 +191,10 @@ public class Reports extends Fragment implements AdapterView.OnItemSelectedListe
             case 2:
                 fragment = new ByMonthChart();
                 break;
+            case 3:
+                fragment = new BySavingsChart();
             default:
                 break;
-
         }
 
         if(fragment != null) {

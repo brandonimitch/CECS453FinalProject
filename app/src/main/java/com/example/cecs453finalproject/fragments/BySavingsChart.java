@@ -17,6 +17,7 @@ import com.example.cecs453finalproject.MainActivity;
 import com.example.cecs453finalproject.R;
 import com.example.cecs453finalproject.classes.Category;
 import com.example.cecs453finalproject.classes.Transaction;
+import com.example.cecs453finalproject.classes.User;
 import com.example.cecs453finalproject.database.CategoryDAO;
 import com.example.cecs453finalproject.database.TransactionDAO;
 import com.example.cecs453finalproject.database.UsersDAO;
@@ -28,12 +29,12 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ByMonthChart.OnFragmentInteractionListener} interface
+ * {@link BySavingsChart.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ByMonthChart#newInstance} factory method to
+ * Use the {@link BySavingsChart#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ByMonthChart extends Fragment {
+public class BySavingsChart extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -51,8 +52,9 @@ public class ByMonthChart extends Fragment {
     private CategoryDAO mCategoryDAO;
     private List<Transaction> mTransactionList;
     private List<Category> mCategoryList;
+    private User mUser;
 
-    public ByMonthChart() {
+    public BySavingsChart() {
         // Required empty public constructor
     }
 
@@ -64,9 +66,8 @@ public class ByMonthChart extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment ByMonthChart.
      */
-    // TODO: Rename and change types and number of parameters
-    public static ByMonthChart newInstance(String param1, String param2) {
-        ByMonthChart fragment = new ByMonthChart();
+    public static BySavingsChart newInstance(String param1, String param2) {
+        BySavingsChart fragment = new BySavingsChart();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -89,6 +90,7 @@ public class ByMonthChart extends Fragment {
         mUserDAO = new UsersDAO(getActivity());
         mCategoryDAO = new CategoryDAO(getActivity());
 
+        mUser = mUserDAO.getUserByID(mUserID);
         mTransactionList = mTransactionDAO.getUserTransactions(mUserID);
         mCategoryList = mCategoryDAO.getUserCategories(mUserID);
     }
@@ -97,16 +99,16 @@ public class ByMonthChart extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_by_month_chart, container, false);
+        View view = inflater.inflate(R.layout.fragment_by_savings_chart, container, false);
 
-        AnyChartView mChart = (AnyChartView) view.findViewById(R.id.by_monthly_chart);
+        AnyChartView mChart = (AnyChartView) view.findViewById(R.id.by_savings_chart);
 
         String[] months = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun",
                 "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
         List<DataEntry> data = new ArrayList<>();
         Cartesian bar = AnyChart.bar();
-        bar.title("Income and Expenses By Month");
+        bar.title("Savings by Month");
         bar.title().fontColor("#B4AB8E");
         bar.title().fontSize(26);
         bar.title().padding(0d, 0d, 15d, 0d);
@@ -115,13 +117,13 @@ public class ByMonthChart extends Fragment {
         bar.yAxis(0).title("in Dollars");
         for (String str : months)
         {
-            data.add(new ValueDataEntry(str, 0));
+            data.add(new ValueDataEntry(str, mUser.getIncome()));
         }
         for (Transaction transaction : mTransactionList)
         {
 
             data.add(new ValueDataEntry(months[transaction.getDateObject().getMonth()],
-                        transaction.getAmount()*transaction.getType()));
+                    transaction.getAmount()*transaction.getType()));
         }
         bar.data(data);
         bar.autoRedraw();
@@ -140,7 +142,7 @@ public class ByMonthChart extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
+        if (context instanceof ByMonthChart.OnFragmentInteractionListener) {
             mListener = (Reports.OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()

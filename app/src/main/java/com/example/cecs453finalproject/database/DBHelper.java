@@ -9,7 +9,7 @@ import android.util.Log;
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DBHelper";
-    private static final String DB_NAME = "CECS453_Final_Expense_Tracker_Rev1.db";
+    private static final String DB_NAME = "CECS453_Final_Expense_Tracker_Rev2.db";
     private static final int DB_VERSION = 1;
 
     // User Datbase column names
@@ -18,6 +18,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_USERNAME = "user_name";
     public static final String COLUMN_USER_PASSWORD = "user_password";
     public static final String COLUMN_USER_EMAIL = "user_email";
+    public static final String COLUMN_USER_INCOME = "user_income";
 
     // Transaction database column names
     public static final String TABLE_TRANSACTIONS = "transactions";
@@ -39,7 +40,8 @@ public class DBHelper extends SQLiteOpenHelper {
             + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COLUMN_USERNAME + " TEXT NOT NULL, "
             + COLUMN_USER_PASSWORD + " TEXT NOT NULL, "
-            + COLUMN_USER_EMAIL + " TEXT NOT NULL "
+            + COLUMN_USER_EMAIL + " TEXT NOT NULL, "
+            + COLUMN_USER_INCOME + " REAL NOT NULL"
             + ");";
 
     private static final String SQL_CREATE_TABLE_TRANSACTIONS = "CREATE TABLE " + TABLE_TRANSACTIONS+ "("

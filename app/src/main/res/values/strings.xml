@@ -9,7 +9,7 @@
 
     <string name="menu_login">Sign Out</string>
     <string name="menu_signup">Sign Up</string>
-    <string name="menu_app_settings">Add/Edit Transactions</string>
+    <string name="menu_app_settings">Modify Expense Tracker</string>
     <string name="menu_expenses">View Transactions</string>
     <string name="menu_reports">Generate Reports</string>
     <string name="menu_send">Send</string>

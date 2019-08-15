@@ -23,7 +23,8 @@ public class UsersDAO {
     private String[] mAllColumns = { DBHelper.COLUMN_USER_ID,
             DBHelper.COLUMN_USERNAME,
             DBHelper.COLUMN_USER_PASSWORD,
-            DBHelper.COLUMN_USER_EMAIL };
+            DBHelper.COLUMN_USER_EMAIL,
+            DBHelper.COLUMN_USER_INCOME};
 
     public UsersDAO(Context context)
     {
@@ -51,12 +52,13 @@ public class UsersDAO {
         mDbHelper.close();
     }
 
-    public User createUser(String username, String password, String email)
+    public User createUser(String username, String password, String email, Double income)
     {
         ContentValues values = new ContentValues();
         values.put(DBHelper.COLUMN_USERNAME, username);
         values.put(DBHelper.COLUMN_USER_PASSWORD, password);
         values.put(DBHelper.COLUMN_USER_EMAIL, email);
+        values.put(DBHelper.COLUMN_USER_INCOME, income);
         long insertId = mDatabase
                 .insert(DBHelper.TABLE_USERS, null, values);
         Cursor cursor = mDatabase
@@ -161,8 +163,29 @@ public class UsersDAO {
         user.setUsername(cursor.getString(1));
         user.setPassword(cursor.getString(2));
         user.setEmail(cursor.getString(3));
+        user.setIncome(cursor.getDouble(4));
         return user;
 
+    }
+
+    public boolean updateUserIncome(long userId, Double income)
+    {
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBHelper.COLUMN_USER_INCOME, income);
+        try {
+            mDatabase.update(DBHelper.TABLE_USERS,
+                    contentValues,
+                    DBHelper.COLUMN_USER_ID + " = ?",
+                    new String[]{Long.toString(userId)});
+            Log.e(TAG, "Update Complete");
+            return true;
+        } catch (SQLException e)
+        {
+            Log.e(TAG, "SQLException while updating database + " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
     }
 
 
