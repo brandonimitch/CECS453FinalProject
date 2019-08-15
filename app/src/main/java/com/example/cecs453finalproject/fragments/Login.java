@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.cecs453finalproject.MainActivity;
 import com.example.cecs453finalproject.R;
+import com.example.cecs453finalproject.classes.SaveSharedPreference;
 import com.example.cecs453finalproject.classes.User;
 import com.example.cecs453finalproject.database.UsersDAO;
 
@@ -116,12 +117,12 @@ public class Login extends Fragment {
             @Override
             public void onClick(View v) {
 
-                //TODO: DELETE AFTER TESTING IS COMPELETE
+               /* //TODO: DELETE AFTER TESTING IS COMPELETE
                 EditText userTest = (EditText) getView().findViewById(R.id.userNameEditTextLogin);
                 EditText passTest = (EditText) getView().findViewById(R.id.passwordEditTextLogin);
                 userTest.setText(userList.get(0).getUsername());
                 passTest.setText(userList.get(0).getPassword());
-                // TODO: TO HERE
+                // TODO: TO HERE*/
 
                 String username = ((EditText) getView().findViewById(R.id.userNameEditTextLogin))
                         .getText().toString();
@@ -134,6 +135,8 @@ public class Login extends Fragment {
                     ((MainActivity) getActivity()).setLoggedInUsername(checkUser.getUsername());
                     ((MainActivity) getActivity()).setLoggedInUserId(checkUser.getId());
                     ((MainActivity) getActivity()).setMonthlyIncome(checkUser.getIncome());
+
+                    SaveSharedPreference.setUserName(getContext(), checkUser.getUsername());
 
                     FragmentManager fragmentManager = getFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, new AddEditExpense()).commit();
