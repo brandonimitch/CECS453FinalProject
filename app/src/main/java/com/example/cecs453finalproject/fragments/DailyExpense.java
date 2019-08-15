@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.cecs453finalproject.R;
+import com.example.cecs453finalproject.adapters.CategorySpinnerAdapter;
+import com.example.cecs453finalproject.adapters.MyRecyclerViewAdapter;
+import com.example.cecs453finalproject.classes.Transaction;
+import com.example.cecs453finalproject.database.CategoryDAO;
+import com.example.cecs453finalproject.database.TransactionDAO;
+import com.example.cecs453finalproject.database.UsersDAO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -28,12 +38,15 @@ import com.example.cecs453finalproject.R;
 public class DailyExpense extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String USER_ID = "param1";
+    private static final String USERNAME = "param2";
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Long mUserID;
+    private String mUsername;
 
 
     // Create variables for control objects.
@@ -43,6 +56,9 @@ public class DailyExpense extends Fragment {
     private Spinner spinner;
     private String categoryNameEntered;
     private double expenseAmountEntered;
+    private RecyclerView mItemsList;
+    private List<Transaction> mTransactionList;
+
 
 
     private OnFragmentInteractionListener mListener;
@@ -73,9 +89,15 @@ public class DailyExpense extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mUserID = getArguments().getLong(USER_ID);
+            mUsername = getArguments().getString(USERNAME);
         }
+
+//        mTransactionDAO = new TransactionDAO(getActivity());
+//        mUserDAO = new UsersDAO(getActivity());
+//        mCategoryDAO = new CategoryDAO(getActivity());
+//        mTransactionList = mTransactionDAO.getUserTransactions(mUserID);
+//        mCategoryList = mCategoryDAO.getUserCategories(mUserID);
     }
 
 
@@ -90,51 +112,23 @@ public class DailyExpense extends Fragment {
         categoryName = v.findViewById(R.id.dailyExpenseEditText1);
         expenseAmount = v.findViewById(R.id.dailyExpenseEditText2);
         dailyExpenseBtn = v.findViewById(R.id.dailyExpenseBtn);
-
-
-        /*
-        *   Adapter class to convert data for recycler view and spinner.
-        * */
-        class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordViewHolder> {
-
-
-            @NonNull
-            @Override
-            public WordViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-                return null;
-            }
-
-            @Override
-            public void onBindViewHolder(@NonNull WordViewHolder wordViewHolder, int i) {
-
-            }
-
-            @Override
-            public int getItemCount() {
-                return 0;
-            }
-
-            /*
-            *   View Holder class for converting to recycler view or spinner.
-            * */
-            class WordViewHolder extends RecyclerView.ViewHolder {
-
-                public WordViewHolder(@NonNull View itemView) {
-                    super(itemView);
-                }
-            }
-        }
-
-
-
         spinner = v.findViewById(R.id.dailyExpenseSpinner);
-//        // Create an ArrayAdapter using the string array and a default spinner layout
-//        WordListAdapter<CharSequence> adapter = WordListAdapter.createFromResource(this,
-//                R.array.planets_array, android.R.layout.simple_spinner_item);
-//        // Specify the layout to use when the list of choices appears
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        // Apply the adapter to the spinner
-//        spinner.setAdapter(adapter);
+
+
+        mItemsList = v.findViewById(R.id.expense_recycler_view);
+        mItemsList.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        final MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(this, mTransactionList,
+//                mCategoryList,this);
+
+//        mItemsList.setAdapter(adapter);
+
+//        //TODO: DELETE AFTER TESTING IS COMPLETE
+//        Transaction newTransaction = mTransactionDAO.createTransaction(mUserID,"7/7/2019",
+//                "Test Expense","Category", -1, 100.00);
+//        mTransactionList.add(newTransaction);
+//
+//        mTransactionDAO.deleteAllUserTransactions(mUserID);
+
 
 
         dailyExpenseBtn.setOnClickListener(new View.OnClickListener() {

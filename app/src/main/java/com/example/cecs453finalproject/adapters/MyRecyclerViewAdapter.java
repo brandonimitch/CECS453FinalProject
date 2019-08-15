@@ -32,7 +32,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     private CategorySpinnerAdapter spinnerAdapter;
     private Fragment mFragment;
 
-    public MyRecyclerViewAdapter(Fragment fragment, List<Transaction> data, List<Category> categories, ItemClickListener clickListener) {
+    public MyRecyclerViewAdapter(Fragment fragment, List<Transaction> data, List<Category> categories,
+                                 ItemClickListener clickListener) {
         this.mFragment = fragment;
         this.mData = data;
         this.mClickListener = clickListener;

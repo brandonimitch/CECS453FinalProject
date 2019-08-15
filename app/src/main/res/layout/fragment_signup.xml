@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_color"
     tools:context=".fragments.Signup">
 
     <LinearLayout
@@ -17,8 +18,8 @@
             android:id="@+id/usernameBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp">
 
@@ -27,103 +28,111 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="12"
+                android:hint="Username"
                 android:inputType="text"
                 android:padding="10dp"
-                android:visibility="visible"
-                android:hint="Username"/>
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorText"
+                android:visibility="visible" />
 
             <ImageView
                 android:id="@+id/error_icon_username"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:padding="3dp"
                 android:src="@drawable/error_image"
-                android:visibility="invisible"
-                android:layout_alignParentEnd="true"/>
+                android:visibility="invisible" />
 
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/passwordBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/passwordBox"
             android:layout_margin="8dp">
 
             <EditText
                 android:id="@+id/passwordEditTextSignup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
                 android:ems="12"
                 android:hint="Password"
-                android:visibility="visible"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorText"
+                android:visibility="visible" />
 
             <ImageView
                 android:id="@+id/error_icon_password"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:padding="3dp"
                 android:src="@drawable/error_image"
-                android:visibility="invisible"
-                android:layout_alignParentEnd="true" />
+                android:visibility="invisible" />
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/passwordRetypeBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/passwordRetypeBox"
             android:layout_margin="8dp">
 
             <EditText
                 android:id="@+id/reEnterPassordEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
                 android:ems="12"
                 android:hint="Retype Password"
                 android:inputType="textPassword"
-                android:visibility="visible"/>
+                android:padding="10dp"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorText"
+                android:visibility="visible" />
 
             <ImageView
                 android:id="@+id/error_icon_password_retype"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:padding="3dp"
                 android:src="@drawable/error_image"
-                android:visibility="invisible"
-                android:layout_alignParentEnd="true" />
+                android:visibility="invisible" />
 
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/emailBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/emailBox"
             android:layout_margin="8dp">
 
             <EditText
                 android:id="@+id/emailEditTextSignup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
                 android:ems="12"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
-                android:visibility="visible"/>
+                android:padding="10dp"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorText"
+                android:visibility="visible" />
 
             <ImageView
                 android:id="@+id/error_icon_email"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:padding="3dp"
                 android:src="@drawable/error_image"
-                android:visibility="invisible"
-                android:layout_alignParentEnd="true" />
+                android:visibility="invisible" />
 
         </RelativeLayout>
 
@@ -133,7 +142,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="8dp"
+            android:background="@drawable/button_shape"
             android:text="sign up"
+            android:textColor="@color/colorText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/emailEditTextSignup" />
 

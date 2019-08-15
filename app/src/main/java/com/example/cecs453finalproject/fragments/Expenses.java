@@ -18,6 +18,7 @@ import com.example.cecs453finalproject.database.CategoryDAO;
 import com.example.cecs453finalproject.database.TransactionDAO;
 import com.example.cecs453finalproject.database.UsersDAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -136,6 +137,7 @@ public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClic
     public void onItemClick(View view, int position) {
 
     }
+
 
     /**
      * This interface must be implemented by activities that contain this

@@ -20,7 +20,6 @@ public class CategorySpinnerAdapter extends ArrayAdapter<String> {
         super(context, textViewResourceId, values);
         this.mContext = context;
         this.mValues = values;
-        mValues.add("Add new");
     }
 
     @Override

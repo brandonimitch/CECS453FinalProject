@@ -38,8 +38,8 @@
             android:ems="10"
             android:hint="Password"
             android:textColorHint="@color/colorText"
-            android:inputType="textPassword"
             android:textColor="@color/colorText"
+            android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/userNameEditTextLogin" />
