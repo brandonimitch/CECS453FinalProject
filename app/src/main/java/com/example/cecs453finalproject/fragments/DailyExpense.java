@@ -1,5 +1,17 @@
 package com.example.cecs453finalproject.fragments;
 
+/*
+ *
+ * Created on 07/10/19
+ * By Tylar Simone and Brandon Mitchell
+ * Califonia State University Long Beach.
+ * CECS 453
+ * Professor Arjang Fahim.
+ *
+ * Expense Tracker
+ *
+ * */
+
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,6 +44,9 @@ import java.util.regex.Pattern;
 
 
 /**
+ * DailyExpense class provides functionality for the fragment_daily_expense.xml layout
+ * Users can add or edit daily expense items.
+ *
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * {@link DailyExpense.OnFragmentInteractionListener} interface

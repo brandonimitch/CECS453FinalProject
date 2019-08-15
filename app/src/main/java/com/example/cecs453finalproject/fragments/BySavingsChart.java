@@ -1,5 +1,17 @@
 package com.example.cecs453finalproject.fragments;
 
+/*
+ *
+ * Created on 07/10/19
+ * By Tylar Simone and Brandon Mitchell
+ * Califonia State University Long Beach.
+ * CECS 453
+ * Professor Arjang Fahim.
+ *
+ * Expense Tracker
+ *
+ * */
+
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,6 +39,8 @@ import java.util.List;
 
 
 /**
+ * Creates a chart of the users savings and displays in the fragment_by_savings_chart.xml layout.
+ *
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * {@link BySavingsChart.OnFragmentInteractionListener} interface

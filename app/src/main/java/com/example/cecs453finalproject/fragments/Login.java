@@ -36,6 +36,8 @@ import java.util.List;
 
 /**
  * Login class provides functionality for the fragment_login.xml layout
+ * Allows users to login if they have an account, and has a link to the signup
+ * page if they do not yet have an account.
  *
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
