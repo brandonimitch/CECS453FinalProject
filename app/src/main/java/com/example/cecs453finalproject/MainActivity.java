@@ -34,7 +34,10 @@ import com.example.cecs453finalproject.database.UsersDAO;
 import com.example.cecs453finalproject.fragments.AddEditCategory;
 import com.example.cecs453finalproject.fragments.AddEditExpense;
 import com.example.cecs453finalproject.fragments.AppSettings;
+import com.example.cecs453finalproject.fragments.ByCategoryChart;
 import com.example.cecs453finalproject.fragments.ByMonthChart;
+import com.example.cecs453finalproject.fragments.BySavingsChart;
+import com.example.cecs453finalproject.fragments.ChangePassword;
 import com.example.cecs453finalproject.fragments.DailyExpense;
 import com.example.cecs453finalproject.fragments.Login;
 import com.example.cecs453finalproject.fragments.MonthlyIncome;
@@ -52,7 +55,9 @@ public class MainActivity extends AppCompatActivity
         Signup.OnFragmentInteractionListener, AppSettings.OnFragmentInteractionListener,
         AddEditExpense.OnFragmentInteractionListener, Reports.OnFragmentInteractionListener,
         AddEditCategory.OnFragmentInteractionListener, DailyExpense.OnFragmentInteractionListener,
-        MonthlyIncome.OnFragmentInteractionListener, DrawerLocker, ByMonthChart.OnFragmentInteractionListener {
+        MonthlyIncome.OnFragmentInteractionListener, DrawerLocker,
+        ByMonthChart.OnFragmentInteractionListener, ByCategoryChart.OnFragmentInteractionListener,
+        BySavingsChart.OnFragmentInteractionListener, ChangePassword.OnFragmentInteractionListener {
 
     DBHelper dbHelper;
     private String loggedInUsername;
@@ -169,7 +174,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_reports) {
 
             fragment = new Reports();
+        } else if (id == R.id.nav_change_password)
+        {
+            fragment = new ChangePassword();
         }
+
 
         if(fragment != null) {
 
