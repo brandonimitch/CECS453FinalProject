@@ -20,9 +20,13 @@ public class CategorySpinnerAdapter extends ArrayAdapter<String> {
                                   ArrayList<String> values)
     {
         super(context, textViewResourceId, values);
-        // Add category to first spot as hint
+        // Ensure category at first spot for hint
         if (!values.contains("Category"))
         {
+            values.add(0,"Category");
+        }
+        else{
+            values.remove("Category");
             values.add(0,"Category");
         }
         this.mContext = context;

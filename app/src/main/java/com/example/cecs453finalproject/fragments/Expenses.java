@@ -85,7 +85,6 @@ public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClic
 
         // TODO: DELETE AFTER TESTING
         mTransactionDAO.deleteAllUserTransactions(mUserID);
-        mCategoryDAO.deleteAllUserCategories(mUserID);
     }
 
     @Override
