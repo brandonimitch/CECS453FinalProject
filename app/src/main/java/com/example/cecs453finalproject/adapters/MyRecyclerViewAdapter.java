@@ -16,7 +16,7 @@ import com.example.cecs453finalproject.R;
 import com.example.cecs453finalproject.classes.Category;
 import com.example.cecs453finalproject.classes.Transaction;
 import com.example.cecs453finalproject.classes.User;
-import com.example.cecs453finalproject.fragments.ExpenseItem;
+import com.example.cecs453finalproject.fragments.AddEditCategory;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -91,7 +91,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 if (item.equals("Add new")){
                     FragmentManager fragmentManager = mFragment.getFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer,
-                            new ExpenseItem()).addToBackStack("Expenses").commit();
+                            new AddEditCategory()).addToBackStack("Expenses").commit();
                 }
                 else
                 {

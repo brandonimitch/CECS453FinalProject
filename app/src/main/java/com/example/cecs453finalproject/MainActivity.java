@@ -2,7 +2,6 @@ package com.example.cecs453finalproject;
 
 //import android.app.FragmentManager;
 
-import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -13,14 +12,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.cecs453finalproject.database.DBHelper;
+import com.example.cecs453finalproject.fragments.AddEditCategory;
 import com.example.cecs453finalproject.fragments.AppSettings;
 import com.example.cecs453finalproject.fragments.DailyExpense;
-import com.example.cecs453finalproject.fragments.ExpenseItem;
 import com.example.cecs453finalproject.fragments.Expenses;
 import com.example.cecs453finalproject.fragments.Login;
 import com.example.cecs453finalproject.fragments.MonthlyIncome;
@@ -32,7 +30,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Login.OnFragmentInteractionListener,
         Signup.OnFragmentInteractionListener, AppSettings.OnFragmentInteractionListener,
         Expenses.OnFragmentInteractionListener, Reports.OnFragmentInteractionListener,
-        ExpenseItem.OnFragmentInteractionListener, DailyExpense.OnFragmentInteractionListener,
+        AddEditCategory.OnFragmentInteractionListener, DailyExpense.OnFragmentInteractionListener,
         MonthlyIncome.OnFragmentInteractionListener, DrawerLocker {
 
     DBHelper dbHelper;
@@ -175,14 +173,6 @@ public class MainActivity extends AppCompatActivity
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             showOptionsMenu = true;
         }
-    }
-
-    public int getScreenWidth()
-    {
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        return size.x;
     }
 }
 

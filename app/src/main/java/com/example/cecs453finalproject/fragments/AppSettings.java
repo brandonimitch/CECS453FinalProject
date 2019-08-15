@@ -90,7 +90,7 @@ public class AppSettings extends Fragment {
             public void onClick(View v) {
 
                 FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, new ExpenseItem()).commit();
+                fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, new AddEditCategory()).commit();
             }
         });
 
