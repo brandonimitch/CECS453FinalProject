@@ -19,7 +19,6 @@ import com.example.cecs453finalproject.database.CategoryDAO;
 import com.example.cecs453finalproject.database.TransactionDAO;
 import com.example.cecs453finalproject.database.UsersDAO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -83,8 +82,9 @@ public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClic
 
         mTransactionList = mTransactionDAO.getUserTransactions(mUserID);
         mCategoryList = mCategoryDAO.getUserCategories(mUserID);
+
         // TODO: DELETE AFTER TESTING
-        mCategoryDAO.deleteAllUserCategories(mUserID);
+        mTransactionDAO.deleteAllUserTransactions(mUserID);
     }
 
     @Override
