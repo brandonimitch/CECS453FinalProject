@@ -188,6 +188,26 @@ public class UsersDAO {
         return false;
     }
 
+    public boolean updateUserPassword(long userId, String password)
+    {
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBHelper.COLUMN_USER_PASSWORD, password);
+        try {
+            mDatabase.update(DBHelper.TABLE_USERS,
+                    contentValues,
+                    DBHelper.COLUMN_USER_ID + " = ?",
+                    new String[]{Long.toString(userId)});
+            Log.e(TAG, "Update Complete");
+            return true;
+        } catch (SQLException e)
+        {
+            Log.e(TAG, "SQLException while updating database + " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 
 }
 
