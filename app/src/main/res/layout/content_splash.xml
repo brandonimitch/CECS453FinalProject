@@ -22,9 +22,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:scaleType="center"
-            android:src="@drawable/sample_logo" />
-
+            android:scaleType="center" />
+        <!--android:src="@drawable/sample_logo"-->
         <RelativeLayout
             android:id="@+id/splash_layout_textview"
             android:layout_width="match_parent"

@@ -6,5 +6,6 @@
     <color name="colorText">#B4AB8E</color>
     <color name="colorToolBar">#2E3032</color>
     <color name="item_text_color">#000</color>
+    <color name="progress_bar_color">#0000FF</color>
 </resources>
     <!--#00574B-->

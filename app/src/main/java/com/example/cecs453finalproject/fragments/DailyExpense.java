@@ -24,6 +24,7 @@ import com.example.cecs453finalproject.R;
 import com.example.cecs453finalproject.adapters.CategorySpinnerAdapter;
 import com.example.cecs453finalproject.adapters.MyRecyclerViewAdapter;
 import com.example.cecs453finalproject.classes.Category;
+import com.example.cecs453finalproject.classes.Expense;
 import com.example.cecs453finalproject.classes.Transaction;
 import com.example.cecs453finalproject.database.CategoryDAO;
 import com.example.cecs453finalproject.database.TransactionDAO;
@@ -135,6 +136,8 @@ public class DailyExpense extends Fragment implements AdapterView.OnItemSelected
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_daily_expense, container, false);
 
+        final Expense expense;
+
         dailyExpenseBtn =  v.findViewById(R.id.daliyExpenseBtn);
         categoryName =  v.findViewById(R.id.dailyExpenseEditText1);
         expenseAmount =  v.findViewById(R.id.dailyExpenseEditText2);
@@ -167,7 +170,7 @@ public class DailyExpense extends Fragment implements AdapterView.OnItemSelected
 
                 if (catStrings.contains(categoryNameEntered)) {
 
-
+//                    expense.setExpense();
                 } else {
 
 
