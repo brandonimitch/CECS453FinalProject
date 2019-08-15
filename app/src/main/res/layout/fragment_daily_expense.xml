@@ -1,86 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_color"
+    android:orientation="vertical"
     tools:context="fragments.DailyExpense">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
         android:id="@+id/textView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="32dp"
         android:text="@string/edit_daily_expense"
+        android:textAlignment="textStart"
+        android:layout_gravity="start"
+        android:padding="16dp"
         android:textColor="@color/colorText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/dailyExpenseEditText1"
-        android:layout_width="275dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="24dp"
-        android:ems="10"
-        android:hint="@string/edit_category"
-        android:inputType="textPersonName"
-        android:textColor="@color/colorText"
-        android:textColorHint="@color/colorText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dailyExpenseSpinner" />
-
-    <EditText
-        android:id="@+id/dailyExpenseEditText2"
-        android:layout_width="273dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="100dp"
-        android:ems="10"
-        android:hint="@string/enter_expense_amount"
-        android:inputType="number"
-        android:textColor="@color/colorText"
-        android:textColorHint="@color/colorText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.108"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dailyExpenseEditText1" />
+        android:textSize="16sp"
+        android:layout_margin="8dp"/>
 
     <Spinner
         android:id="@+id/dailyExpenseSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        android:layout_gravity="start"
+        android:layout_margin="8dp"/>
+
+    <EditText
+        android:id="@+id/daily_expense_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:inputType="date"
+        android:textAlignment="textStart"
+        android:layout_gravity="start"
+        android:padding="16dp"
+        android:textColor="@color/colorText"
+        android:textColorHint="@color/colorText"
+        android:layout_margin="8dp"/>
+
+    <EditText
+        android:id="@+id/daily_expense_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textAlignment="textStart"
+        android:layout_gravity="start"
+        android:padding="16dp"
+        android:inputType="text"
+        android:textColor="@color/colorText"
+        android:textColorHint="@color/colorText"
+        android:layout_margin="8dp"/>
+
+    <EditText
+        android:id="@+id/daily_expense_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textAlignment="textStart"
+        android:layout_gravity="start"
+        android:padding="16dp"
+        android:inputType="text"
+        android:textColor="@color/colorText"
+        android:textColorHint="@color/colorText"
+        android:layout_margin="8dp"/>
+
+
+    <Switch
+        android:id="@+id/daily_expense_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Income"
+        android:textColor="@color/colorText"
+        android:textSize="16sp"
+        android:textAlignment="textStart"
+        android:layout_gravity="start"
+        android:padding="16dp"
+        android:layout_margin="8dp"
+        android:checked="true"/>
+
+    <EditText
+        android:id="@+id/daily_expense_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textAlignment="textStart"
+        android:layout_gravity="start"
+        android:padding="16dp"
+        android:inputType="numberDecimal"
+        android:textColor="@color/colorText"
+        android:textColorHint="@color/colorText"
+        android:layout_margin="8dp"/>
+
 
     <Button
         android:id="@+id/daliyExpenseBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="146dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="177dp"
+        android:layout_gravity="center"
         android:background="@drawable/button_shape"
+        android:layout_margin="32dp"
         android:text="@string/submit_button"
-        android:textColor="@color/colorText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.417"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dailyExpenseEditText2" />
+        android:textColor="@color/colorText" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

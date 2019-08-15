@@ -147,4 +147,28 @@ public class TransactionDAO {
         return transaction;
     }
 
+    public boolean updateTransaction(long transactionId, String date, String desc, String category,
+                                     int type, double amount)
+    {
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBHelper.COLUMN_TRANSACTION_DATE, date);
+        contentValues.put(DBHelper.COLUMN_TRANSACTION_DESCRIPTION, desc);
+        contentValues.put(DBHelper.COLUMN_TRANSACTION_CATEGORY, category);
+        contentValues.put(DBHelper.COLUMN_TRANSACTION_TYPE, type);
+        contentValues.put(DBHelper.COLUMN_TRANSACTION_AMOUNT, amount);
+        try {
+            mDatabase.update(DBHelper.TABLE_TRANSACTIONS,
+                    contentValues,
+                    DBHelper.COLUMN_TRANSACTION_ID + " = ?",
+                    new String[]{Long.toString(transactionId)});
+            return true;
+        } catch (SQLException e)
+        {
+            Log.e(TAG, "SQLException while updating database + " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }
