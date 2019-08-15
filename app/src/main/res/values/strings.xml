@@ -20,9 +20,9 @@
     <string name="add_edit_monthly_income_btn">Add / Edit Monthly Income</string>
 
     <string name="text_color">#B4AB8E</string>
-    <string name="expense_category">Expense Categories / Add Category</string>
+    <string name="expense_category">Edit Categories / Add Category</string>
     <string name="edit_category">Enter Category to be Edited</string>
-    <string name="original_category">Enter Original Category</string>
+    <string name="original_category">Category to be Edited</string>
     <string name="new_category">Enter New Category Name</string>
     <string name="submit_button">Submit</string>
     <string name="enter_new_category">Enter Name for New Category to be Added</string>

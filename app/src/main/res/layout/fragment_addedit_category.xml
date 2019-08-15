@@ -16,9 +16,10 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:text="@string/expense_category"
+        android:textAlignment="center"
         android:textColor="@color/colorText"
+        android:textSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,31 +30,18 @@
         android:layout_margin="10dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.07"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/expenseCatTitleTextView" />
-
-    <TextView
-        android:id="@+id/catToEditTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:text="@string/edit_category"
-        android:textColor="@color/colorText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.006"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/expenseCatSpinner" />
 
     <EditText
         android:id="@+id/changeCategoryEditText"
         android:layout_width="263dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="@string/original_category"
@@ -61,15 +49,14 @@
         android:textColor="@color/colorText"
         android:textColorHint="@color/colorText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.054"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/catToEditTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/expenseCatSpinner" />
 
     <EditText
         android:id="@+id/newCategoryEditText"
         android:layout_width="265dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
@@ -78,7 +65,6 @@
         android:textColor="@color/colorText"
         android:textColorHint="@color/colorText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.142"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/changeCategoryEditText" />
 
@@ -86,18 +72,17 @@
         android:id="@+id/categorySubmitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="315dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/button_shape"
         android:text="@string/submit_button"
         android:textColor="@color/colorText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.077"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newCategoryEditText" />
 
-    <TextView
+   <!-- <TextView
         android:id="@+id/newCategoryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -159,6 +144,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.219"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reEnterNewCatEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/reEnterNewCatEditText" />-->
 
 </android.support.constraint.ConstraintLayout>

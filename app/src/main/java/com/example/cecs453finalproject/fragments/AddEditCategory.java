@@ -4,12 +4,15 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cecs453finalproject.MainActivity;
 import com.example.cecs453finalproject.R;
@@ -32,7 +35,7 @@ import java.util.List;
  * Use the {@link AddEditCategory#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddEditCategory extends Fragment {
+public class AddEditCategory extends Fragment implements AdapterView.OnItemSelectedListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -51,6 +54,12 @@ public class AddEditCategory extends Fragment {
     private CategoryDAO mCategoryDAO;
     private List<Transaction> mTransactionList;
     private List<Category> mCategoryList;
+
+    // Widgets
+    Button submitButton;
+    TextView originalCategoryTextView;
+    TextView newCategoryTextView;
+    Spinner categorySpinner;
 
     public AddEditCategory() {
         // Required empty public constructor
@@ -99,10 +108,10 @@ public class AddEditCategory extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_addedit_category, container, false);
 
-        Button submitButton = (Button) view.findViewById(R.id.categorySubmitButton);
-        TextView originalCategoryTextView = (TextView) view.findViewById(R.id.changeCategoryEditText);
-        TextView newCategoryTextView = (TextView) view.findViewById(R.id.newCategoryEditText);
-        Spinner categorySpinner = (Spinner) view.findViewById(R.id.expenseCatSpinner);
+        submitButton = (Button) view.findViewById(R.id.categorySubmitButton);
+        originalCategoryTextView = (TextView) view.findViewById(R.id.changeCategoryEditText);
+        newCategoryTextView = (TextView) view.findViewById(R.id.newCategoryEditText);
+        categorySpinner = (Spinner) view.findViewById(R.id.expenseCatSpinner);
 
         ArrayList<String> categoryStrings = new ArrayList<>();
         for (Category category : mCategoryList)
@@ -114,7 +123,59 @@ public class AddEditCategory extends Fragment {
         CategorySpinnerAdapter adapter = new CategorySpinnerAdapter(categorySpinner.getContext(),
                 R.layout.spinner_drop_item, categoryStrings);
         categorySpinner.setAdapter(adapter);
+        categorySpinner.setOnItemSelectedListener(this);
 
+        // Submit Button functionality
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ArrayList<String> catStrings = new ArrayList<>();
+                for (Category category : mCategoryList)
+                {
+                    catStrings.add(category.getName());
+                }
+
+                String newCat = newCategoryTextView.getText().toString();
+                String oldCat = originalCategoryTextView.getText().toString();
+
+                if (catStrings.contains(oldCat))
+                {
+                    mCategoryDAO.updateCategory(mUserID, oldCat, newCat);
+                    Toast.makeText(view.getContext(),
+                            oldCat + " has been replaced by "+ newCat,
+                            Toast.LENGTH_SHORT)
+                            .show();
+                    Log.e(TAG, "Replace");
+                    catStrings.remove(oldCat);
+                    catStrings.add(newCat);
+                }
+                else
+                {
+                    Log.e(TAG, "New");
+                    mCategoryDAO.createCategory(mUserID, newCat);
+                    Toast.makeText(view.getContext(),
+                            newCat + " has been added",
+                            Toast.LENGTH_SHORT)
+                            .show();
+                    catStrings.add(newCat);
+                }
+                catStrings.add("Add New");
+                Log.e(TAG, catStrings.toString());
+
+                // Reset Text fields
+                originalCategoryTextView.setText("");
+                newCategoryTextView.setText("");
+
+                //Update Spinner list
+                CategorySpinnerAdapter adapter = new CategorySpinnerAdapter(categorySpinner.getContext(),
+                        R.layout.spinner_drop_item, catStrings);
+                categorySpinner.setAdapter(adapter);
+
+                //Update mCategoryList
+                mCategoryList = mCategoryDAO.getUserCategories(mUserID);
+            }
+        });
 
         return view;
     }
@@ -141,6 +202,22 @@ public class AddEditCategory extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        if (i != 0)
+        {
+            String chosenCategory = categorySpinner.getSelectedItem().toString();
+            originalCategoryTextView.setText(chosenCategory);
+            originalCategoryTextView.setEnabled(false);
+        }
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 
     /**

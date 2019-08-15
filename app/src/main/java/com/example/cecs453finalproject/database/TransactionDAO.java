@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.example.cecs453finalproject.classes.Category;
 import com.example.cecs453finalproject.classes.Transaction;
 import com.example.cecs453finalproject.classes.User;
 
@@ -18,6 +19,8 @@ public class TransactionDAO {
     public static final String TAG = "TransactionDAO";
 
     private Context mContext;
+    private CategoryDAO mCategoryDAO;
+    private List<Category> mCategoryList;
 
     private SQLiteDatabase mDatabase;
     private DBHelper mDbHelper;
@@ -31,9 +34,9 @@ public class TransactionDAO {
 
     public TransactionDAO(Context context)
     {
-
-        mDbHelper = new DBHelper(context);
         this.mContext = context;
+        mDbHelper = new DBHelper(context);
+        mCategoryDAO = new CategoryDAO(context);
 
         try
         {
@@ -57,6 +60,18 @@ public class TransactionDAO {
 
     public Transaction createTransaction(long userID, String date, String description, String category, int type, double amt)
     {
+        mCategoryList = mCategoryDAO.getUserCategories(userID);
+        ArrayList<String> catStrings = new ArrayList<>();
+        for (Category cat : mCategoryList)
+        {
+            catStrings.add(cat.getName());
+        }
+
+        // Create new Category if not in category list
+        if (!catStrings.contains(category))
+        {
+            mCategoryDAO.createCategory(userID, category);
+        }
 
         ContentValues values = new ContentValues();
         values.put(DBHelper.COLUMN_TRANSACTION_DATE, date);
@@ -93,7 +108,9 @@ public class TransactionDAO {
     {
         List<Transaction> listTransaction = new ArrayList<Transaction>();
 
-        Cursor cursor = mDatabase.rawQuery("SELECT * FROM " + DBHelper.TABLE_TRANSACTIONS, null);
+        Cursor cursor = mDatabase.rawQuery("SELECT * FROM " + DBHelper.TABLE_TRANSACTIONS
+                + " WHERE " + DBHelper.COLUMN_TRANSACTION_USER_ID + " = ?",
+                new String[]{Long.toString(userID)});
 
         if(cursor.moveToFirst())
         {

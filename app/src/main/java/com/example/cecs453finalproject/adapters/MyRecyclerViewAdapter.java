@@ -2,21 +2,16 @@ package com.example.cecs453finalproject.adapters;
 
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.cecs453finalproject.R;
 import com.example.cecs453finalproject.classes.Category;
 import com.example.cecs453finalproject.classes.Transaction;
 import com.example.cecs453finalproject.classes.User;
-import com.example.cecs453finalproject.fragments.AddEditCategory;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -74,16 +69,20 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             categories.add("Add new");
         }
 
-        spinnerAdapter = new CategorySpinnerAdapter(holder.mCategoryText.getContext(),
-                android.R.layout.simple_spinner_dropdown_item, categories);
-
         holder.mDateText.setText(data.getDate());
         holder.mDescrText.setText(data.getDescr());
-        holder.mAmountText.setText(nf.format(data.getAmount()*data.getType()));
+        holder.mAmountText.setText(nf.format(amount));
+        holder.mCategoryText.setText(data.getCategory());
+/*        // Check if category has been established
+        if (categories.contains(data.getCategory()))
+        {
+            int index = categories.indexOf(data.getCategory());
+            holder.mCategoryText.setSelection(index);
+            holder.mCategoryText.setEnabled(false);
+        }*/
 
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        holder.mCategoryText.setAdapter(spinnerAdapter);
-        holder.mCategoryText.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        /*holder.mCategoryText.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
@@ -96,7 +95,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 else
                 {
                     //TODO: Make spinner non editable!
-                    Log.e(TAG,adapterView.getParent().getClass().toString());
+
                 }
 
             }
@@ -105,7 +104,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
 
-        });
+        });*/
 
     }
 
@@ -124,7 +123,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         View mView;
         TextView mDateText;
         TextView mDescrText;
-        Spinner mCategoryText;
+        TextView mCategoryText;
         TextView mAmountText;
         ItemClickListener mClickListener;
 

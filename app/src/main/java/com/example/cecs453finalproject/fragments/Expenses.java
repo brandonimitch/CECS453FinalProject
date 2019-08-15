@@ -30,7 +30,7 @@ import java.util.List;
  * Use the {@link Expenses#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClickListener{
+public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String USER_ID = "param1";
@@ -93,11 +93,6 @@ public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClic
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_expenses, container, false);
 
-        // Obtain username and customer ID from main activity.
-        String username = getArguments().getString("username");
-        Long customerId = getArguments().getLong("customerID");
-
-
         mItemsList = (RecyclerView) v.findViewById(R.id.expense_recycler_view);
         mItemsList.setLayoutManager(new LinearLayoutManager(getActivity()));
         final MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(this, mTransactionList,
@@ -109,7 +104,7 @@ public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClic
         Transaction newTransaction0 = mTransactionDAO.createTransaction(mUserID,"7/7/2019",
                 "Test Expense","Category", -1, 100.00);
         Transaction newTransaction1 = mTransactionDAO.createTransaction(mUserID,"7/8/2019",
-                "Vons Grocery Store","Grocery", -1, 198.46);
+                "Vons Grocery Store","Category", -1, 198.46);
 
         mTransactionList.add(newTransaction0);
         mTransactionList.add(newTransaction1);

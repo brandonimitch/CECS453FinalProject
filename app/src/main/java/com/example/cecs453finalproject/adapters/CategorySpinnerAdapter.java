@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class CategorySpinnerAdapter extends ArrayAdapter<String> {
 
@@ -19,6 +20,7 @@ public class CategorySpinnerAdapter extends ArrayAdapter<String> {
     {
         super(context, textViewResourceId, values);
         this.mContext = context;
+        Collections.sort(values.subList(1,values.size()));
         this.mValues = values;
     }
 
@@ -65,6 +67,7 @@ public class CategorySpinnerAdapter extends ArrayAdapter<String> {
             tv.setTextColor(Color.GRAY);
         }
         else {
+            tv.setTextColor(Color.BLACK);
         }
         return view;
     }
