@@ -136,6 +136,21 @@ public class AddEditCategory extends Fragment implements AdapterView.OnItemSelec
                 String newCat = newCategoryTextView.getText().toString();
                 String oldCat = categorySpinner.getSelectedItem().toString();
 
+                // Check if new category is blank
+                if(newCat.length() == 0)
+                {
+                    Toast.makeText(getContext(), "New Category is blank.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Check if new Category is already in
+                if (catStrings.contains(newCat))
+                {
+                    Toast.makeText(getContext(), "Category already exists!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
                 if (catStrings.contains(oldCat))
                 {
                     mCategoryDAO.updateCategory(mUserID, oldCat, newCat);

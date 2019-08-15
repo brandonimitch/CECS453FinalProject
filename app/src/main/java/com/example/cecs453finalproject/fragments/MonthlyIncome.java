@@ -96,6 +96,8 @@ public class MonthlyIncome extends Fragment {
         monthlyIncomeEdTxt = v.findViewById(R.id.monthlyIncomeEditText);
         monthlyIncomeBtn = v.findViewById(R.id.submit_monthly_income);
         currentIncomeEdTxt = v.findViewById(R.id.current_income);
+        TextView currentText = v.findViewById(R.id.current_text);
+        currentText.setVisibility(View.VISIBLE);
 
         currentIncomeEdTxt.setText(nf.format(userIncome));
 
