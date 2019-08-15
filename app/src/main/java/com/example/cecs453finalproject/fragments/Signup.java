@@ -118,7 +118,7 @@ public class Signup extends Fragment {
                     String password = ((EditText) getView().findViewById(R.id.passwordEditTextSignup)).getText().toString();
                     String email = ((EditText) getView().findViewById(R.id.emailEditTextSignup)).getText().toString();
 
-                    User user = mUserDAO.createUser(username, password, email);
+                    User user = mUserDAO.createUser(username, password, email,0.0);
 
                     // TODO: Delete after checking username is in database
                     User userCheck = mUserDAO.getUserByID(user.getId());

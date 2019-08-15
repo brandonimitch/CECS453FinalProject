@@ -17,9 +17,10 @@ import android.view.MenuItem;
 
 import com.example.cecs453finalproject.database.DBHelper;
 import com.example.cecs453finalproject.fragments.AddEditCategory;
-import com.example.cecs453finalproject.fragments.AddEditExpense;
 import com.example.cecs453finalproject.fragments.AppSettings;
+import com.example.cecs453finalproject.fragments.ByMonthChart;
 import com.example.cecs453finalproject.fragments.DailyExpense;
+import com.example.cecs453finalproject.fragments.Expenses;
 import com.example.cecs453finalproject.fragments.Login;
 import com.example.cecs453finalproject.fragments.MonthlyIncome;
 import com.example.cecs453finalproject.fragments.Reports;
@@ -29,14 +30,15 @@ import com.example.cecs453finalproject.interfaces.DrawerLocker;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Login.OnFragmentInteractionListener,
         Signup.OnFragmentInteractionListener, AppSettings.OnFragmentInteractionListener,
-        AddEditExpense.OnFragmentInteractionListener, Reports.OnFragmentInteractionListener,
+        Expenses.OnFragmentInteractionListener, Reports.OnFragmentInteractionListener,
         AddEditCategory.OnFragmentInteractionListener, DailyExpense.OnFragmentInteractionListener,
-        MonthlyIncome.OnFragmentInteractionListener, DrawerLocker {
+        MonthlyIncome.OnFragmentInteractionListener, DrawerLocker, ByMonthChart.OnFragmentInteractionListener {
 
     DBHelper dbHelper;
     private String loggedInUsername;
     private long loggedInUserId;
     private boolean showOptionsMenu = false;
+    private double monthlyIncome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,11 +116,6 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = null;
 
-        Bundle bundle = new Bundle();
-        bundle.putString("username", username);
-        bundle.putLong("customerID", customerId);
-
-
         if (id == R.id.nav_home) {
             loggedInUserId = 0;
             loggedInUsername = null;
@@ -129,24 +126,18 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.nav_settings) {
 
             fragment = new AppSettings();
-            fragment.setArguments(bundle);
 
         } else if (id == R.id.nav_expenses) {
 
-            fragment = new AddEditExpense();
-            fragment.setArguments(bundle);
+            fragment = new Expenses();
 
         } else if (id == R.id.nav_reports) {
 
             fragment = new Reports();
-            fragment.setArguments(bundle);
         }
-
-
 
         if(fragment != null) {
 
-            fragmentManager.popBackStack();
             fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, fragment).commit();
         }
 
@@ -176,6 +167,14 @@ public class MainActivity extends AppCompatActivity
         this.loggedInUserId = loggedInUserId;
     }
 
+    public double getMonthlyIncome() {
+        return monthlyIncome;
+    }
+
+    public void setMonthlyIncome(double monthlyIncome) {
+        this.monthlyIncome = monthlyIncome;
+    }
+
     @Override
     public void setDrawerLocked(boolean enabled) {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -189,6 +188,8 @@ public class MainActivity extends AppCompatActivity
             showOptionsMenu = true;
         }
     }
+
+
 }
 
 

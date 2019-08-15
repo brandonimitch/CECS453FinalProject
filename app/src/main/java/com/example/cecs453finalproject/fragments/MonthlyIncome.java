@@ -9,8 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.cecs453finalproject.MainActivity;
 import com.example.cecs453finalproject.R;
+import com.example.cecs453finalproject.classes.User;
+import com.example.cecs453finalproject.database.UsersDAO;
+
+import java.text.NumberFormat;
 
 
 /**
@@ -26,15 +33,22 @@ public class MonthlyIncome extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG =  "Monthly Income";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private NumberFormat nf = NumberFormat.getCurrencyInstance();
 
     // Create variables for control objects.
     private EditText monthlyIncomeEdTxt;
+    private TextView currentIncomeEdTxt;
     private Button monthlyIncomeBtn;
     private String monthlyIncomeEntered;
+    private double userIncome;
+    private UsersDAO mUserDAO;
+    private long mUserId;
+    private User mUser;
 
     private OnFragmentInteractionListener mListener;
 
@@ -66,6 +80,11 @@ public class MonthlyIncome extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        userIncome = ((MainActivity) getActivity()).getMonthlyIncome();
+        mUserId = ((MainActivity) getActivity()).getLoggedInUserId();
+        mUserDAO = new UsersDAO(getActivity());
+        mUser = mUserDAO.getUserByID(mUserId);
     }
 
     @Override
@@ -75,15 +94,28 @@ public class MonthlyIncome extends Fragment {
         View v = inflater.inflate(R.layout.fragment_monthly_income, container, false);
 
         monthlyIncomeEdTxt = v.findViewById(R.id.monthlyIncomeEditText);
-        monthlyIncomeBtn = v.findViewById(R.id.monthlyIncomeBtn);
+        monthlyIncomeBtn = v.findViewById(R.id.submit_monthly_income);
+        currentIncomeEdTxt = v.findViewById(R.id.current_income);
+
+        currentIncomeEdTxt.setText(nf.format(userIncome));
 
         monthlyIncomeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                monthlyIncomeEntered = monthlyIncomeEdTxt.getText().toString();
+                if (monthlyIncomeEdTxt.getText().toString().length() > 0)
+                {
+                    monthlyIncomeEntered = monthlyIncomeEdTxt.getText().toString();
+                    ((MainActivity)getActivity()).setMonthlyIncome(Double.parseDouble(monthlyIncomeEntered));
+                    mUserDAO.updateUserIncome(mUserId, Double.parseDouble(monthlyIncomeEntered));
+                    currentIncomeEdTxt.setText(nf.format(Double.parseDouble(monthlyIncomeEntered)));
+                }
+                else
+                {
+                    Toast.makeText(getContext(), "New Income field is blank.", Toast.LENGTH_SHORT).show();
+                }
 
-                //// TODO: ADD FUNCTIONALITY TO SEND EDIT TXT INFO (monthlyIncomeEntered) TO DATABASE //////////
+
             }
         });
 

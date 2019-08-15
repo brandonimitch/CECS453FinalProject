@@ -4,51 +4,57 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.anychart.AnyChart;
+import com.anychart.AnyChartView;
+import com.anychart.chart.common.dataentry.DataEntry;
+import com.anychart.chart.common.dataentry.ValueDataEntry;
+import com.anychart.charts.Cartesian;
 import com.example.cecs453finalproject.MainActivity;
 import com.example.cecs453finalproject.R;
-import com.example.cecs453finalproject.adapters.MyRecyclerViewAdapter;
 import com.example.cecs453finalproject.classes.Category;
 import com.example.cecs453finalproject.classes.Transaction;
+import com.example.cecs453finalproject.classes.User;
 import com.example.cecs453finalproject.database.CategoryDAO;
 import com.example.cecs453finalproject.database.TransactionDAO;
 import com.example.cecs453finalproject.database.UsersDAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AddEditExpense.OnFragmentInteractionListener} interface
+ * {@link BySavingsChart.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link AddEditExpense#newInstance} factory method to
+ * Use the {@link BySavingsChart#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddEditExpense extends Fragment implements MyRecyclerViewAdapter.ItemClickListener {
+public class BySavingsChart extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String USER_ID = "param1";
-    private static final String USERNAME = "param2";
-
-    // TODO: Rename and change types of parameters
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
     private Long mUserID;
     private String mUsername;
 
-    private OnFragmentInteractionListener mListener;
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+    private Reports.OnFragmentInteractionListener mListener;
     private TransactionDAO mTransactionDAO;
     private UsersDAO mUserDAO;
     private CategoryDAO mCategoryDAO;
     private List<Transaction> mTransactionList;
     private List<Category> mCategoryList;
-    private RecyclerView mItemsList;
+    private User mUser;
 
-    public AddEditExpense() {
+    public BySavingsChart() {
         // Required empty public constructor
     }
 
@@ -58,14 +64,13 @@ public class AddEditExpense extends Fragment implements MyRecyclerViewAdapter.It
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AddEditExpense.
+     * @return A new instance of fragment ByMonthChart.
      */
-    // TODO: Rename and change types and number of parameters
-    public static AddEditExpense newInstance(long param1, String param2) {
-        AddEditExpense fragment = new AddEditExpense();
+    public static BySavingsChart newInstance(String param1, String param2) {
+        BySavingsChart fragment = new BySavingsChart();
         Bundle args = new Bundle();
-        args.putLong(USER_ID, param1);
-        args.putString(USERNAME, param2);
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -73,6 +78,11 @@ public class AddEditExpense extends Fragment implements MyRecyclerViewAdapter.It
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+
         mUserID = ((MainActivity) getActivity()).getLoggedInUserId();
         mUsername = ((MainActivity) getActivity()).getLoggedInUsername();
 
@@ -80,49 +90,46 @@ public class AddEditExpense extends Fragment implements MyRecyclerViewAdapter.It
         mUserDAO = new UsersDAO(getActivity());
         mCategoryDAO = new CategoryDAO(getActivity());
 
+        mUser = mUserDAO.getUserByID(mUserID);
         mTransactionList = mTransactionDAO.getUserTransactions(mUserID);
         mCategoryList = mCategoryDAO.getUserCategories(mUserID);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_addedit_expense, container, false);
+        View view = inflater.inflate(R.layout.fragment_by_savings_chart, container, false);
 
-        mItemsList = (RecyclerView) v.findViewById(R.id.expense_recycler_view);
-        mItemsList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        AnyChartView mChart = (AnyChartView) view.findViewById(R.id.by_savings_chart);
 
-        //TODO: DELETE AFTER TESTING IS COMPLETE
-        if (mTransactionList.size() == 0)
+        String[] months = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+
+        List<DataEntry> data = new ArrayList<>();
+        Cartesian bar = AnyChart.bar();
+        bar.title("Savings by Month");
+        bar.title().fontColor("#B4AB8E");
+        bar.title().fontSize(26);
+        bar.title().padding(0d, 0d, 15d, 0d);
+        bar.title().align("center");
+        bar.background().fill("#232426");
+        bar.yAxis(0).title("in Dollars");
+        for (String str : months)
         {
-            Transaction newTransaction0 = mTransactionDAO.createTransaction(mUserID,"07/07/2019",
-                    "Test Expense","Birthday", 1, 100.00);
-            Transaction newTransaction1 = mTransactionDAO.createTransaction(mUserID,"06/08/2019",
-                    "Vons Grocery Store","Grocery", -1, 198.46);
-            Transaction newTransaction2 = mTransactionDAO.createTransaction(mUserID,"04/07/2019",
-                    "Gift from Auntie Debbie Just need to make this longer","Birthday", 1, 250.00);
-            Transaction newTransaction3 = mTransactionDAO.createTransaction(mUserID,"03/08/2019",
-                    "Albertsons","Grocery", -1, 198.46);
-            Transaction newTransaction4 = mTransactionDAO.createTransaction(mUserID,"06/07/2019",
-                    "Panama Joe's","Bar", -1, 34.56);
-            Transaction newTransaction5 = mTransactionDAO.createTransaction(mUserID,"08/08/2019",
-                    "Uber","Ride Share", -1, 7.86);
-
-            mTransactionList.add(newTransaction0);
-            mTransactionList.add(newTransaction1);
-            mTransactionList.add(newTransaction2);
-            mTransactionList.add(newTransaction3);
-            mTransactionList.add(newTransaction4);
-            mTransactionList.add(newTransaction5);
+            data.add(new ValueDataEntry(str, mUser.getIncome()));
         }
-        // TODO: TO HERE
+        for (Transaction transaction : mTransactionList)
+        {
 
-        MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(this, mTransactionList,
-                mCategoryList,this);
-        mItemsList.setAdapter(adapter);
-        return v;
+            data.add(new ValueDataEntry(months[transaction.getDateObject().getMonth()],
+                    transaction.getAmount()*transaction.getType()));
+        }
+        bar.data(data);
+        bar.autoRedraw();
+        mChart.setChart(bar);
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -135,8 +142,8 @@ public class AddEditExpense extends Fragment implements MyRecyclerViewAdapter.It
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof ByMonthChart.OnFragmentInteractionListener) {
+            mListener = (Reports.OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -148,12 +155,6 @@ public class AddEditExpense extends Fragment implements MyRecyclerViewAdapter.It
         super.onDetach();
         mListener = null;
     }
-
-    @Override
-    public void onItemClick(View view, int position) {
-
-    }
-
 
     /**
      * This interface must be implemented by activities that contain this
@@ -169,5 +170,4 @@ public class AddEditExpense extends Fragment implements MyRecyclerViewAdapter.It
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
 }

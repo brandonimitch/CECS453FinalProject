@@ -17,12 +17,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
@@ -51,29 +46,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         });
 
         this.mData = data;
-    }
-
-    private HashMap<Long, Date> sortListbyDate(HashMap<Long, Date> hm)
-    {
-        // Create a list from elements of HashMap
-        List<Map.Entry<Long, Date> > list =
-                new LinkedList<Map.Entry<Long, Date> >(hm.entrySet());
-
-        // Sort the list
-        Collections.sort(list, new Comparator<Map.Entry<Long, Date> >() {
-            public int compare(Map.Entry<Long, Date> o1,
-                               Map.Entry<Long, Date> o2)
-            {
-                return (o2.getValue()).compareTo(o1.getValue());
-            }
-        });
-
-        // put data from sorted list to hashmap
-        HashMap<Long, Date> temp = new LinkedHashMap<Long, Date>();
-        for (Map.Entry<Long, Date> aa : list) {
-            temp.put(aa.getKey(), aa.getValue());
-        }
-        return temp;
     }
 
     @Override
@@ -111,38 +83,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         holder.mDescrText.setText(data.getDescr());
         holder.mAmountText.setText(nf.format(amount));
         holder.mCategoryText.setText(data.getCategory());
-/*        // Check if category has been established
-        if (categories.contains(data.getCategory()))
-        {
-            int index = categories.indexOf(data.getCategory());
-            holder.mCategoryText.setSelection(index);
-            holder.mCategoryText.setEnabled(false);
-        }*/
-
-
-        /*holder.mCategoryText.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                String item = (String) adapterView.getItemAtPosition(i);
-                if (item.equals("Add new")){
-                    FragmentManager fragmentManager = mFragment.getFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer,
-                            new AddEditCategory()).addToBackStack("AddEditExpense").commit();
-                }
-                else
-                {
-                    //TODO: Make spinner non editable!
-
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-
-        });*/
 
     }
 

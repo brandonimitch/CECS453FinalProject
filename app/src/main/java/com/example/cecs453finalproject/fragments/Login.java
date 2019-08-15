@@ -94,7 +94,8 @@ public class Login extends Fragment {
             Log.e(TAG,"ID: " + user.getId() +
                     "\nUsername: " + user.getUsername() +
                     "\nPassword: " + user.getPassword() +
-                    "\nEmail: " + user.getEmail()+"\n");
+                    "\nEmail: " + user.getEmail()+
+                    "\nIncome: " + user.getIncome() +"\n");
         }
         // TODO: TO HERE
 
@@ -130,6 +131,9 @@ public class Login extends Fragment {
                 {
                     // Allow User to access navigation drawer
                     ((MainActivity) getActivity()).setDrawerLocked(false);
+                    ((MainActivity) getActivity()).setLoggedInUsername(checkUser.getUsername());
+                    ((MainActivity) getActivity()).setLoggedInUserId(checkUser.getId());
+                    ((MainActivity) getActivity()).setMonthlyIncome(checkUser.getIncome());
 
                     FragmentManager fragmentManager = getFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, new AddEditExpense()).commit();

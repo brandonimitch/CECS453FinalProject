@@ -12,14 +12,16 @@ public class User implements Serializable {
     private String mUsername;
     private String mPassword;
     private String mEmail;
+    private double mIncome;
 
     public User () {}
 
-    public User(String username, String password, String email)
+    public User(String username, String password, String email, double income)
     {
         this.mUsername = username;
         this.mPassword = password;
         this.mEmail = email;
+        this.mIncome = income;
     }
 
     public long getId() {
@@ -54,4 +56,11 @@ public class User implements Serializable {
         this.mEmail = mEmail;
     }
 
+    public double getIncome() {
+        return mIncome;
+    }
+
+    public void setIncome(double mIncome) {
+        this.mIncome = mIncome;
+    }
 }
