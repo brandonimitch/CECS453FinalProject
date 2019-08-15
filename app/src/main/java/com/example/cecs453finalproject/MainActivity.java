@@ -27,6 +27,11 @@ import com.example.cecs453finalproject.fragments.Reports;
 import com.example.cecs453finalproject.fragments.Signup;
 import com.example.cecs453finalproject.interfaces.DrawerLocker;
 
+
+/*
+*   Class MainActivity is the activity where all the fragments are displayed. Implements
+*   onFragmentInteractionListener for each fragment in the project.
+* */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Login.OnFragmentInteractionListener,
         Signup.OnFragmentInteractionListener, AppSettings.OnFragmentInteractionListener,

@@ -24,11 +24,12 @@
         android:id="@+id/navHeaderTitleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="cursive"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="@string/project_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/colorText"
-        android:textSize="18sp"
+        android:textSize="30sp"
         android:textStyle="bold|italic" />
 
 
