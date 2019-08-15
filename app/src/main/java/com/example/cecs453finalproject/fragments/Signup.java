@@ -25,6 +25,10 @@ import java.util.List;
 
 
 /**
+ * Signup class provides functionality to the fragment_signup.xml layout. Users sign up for an
+ * account by providing a username, pasword, and email. After completing signup the user is
+ * redirected to the login page.
+ *
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * {@link Signup.OnFragmentInteractionListener} interface
@@ -98,11 +102,11 @@ public class Signup extends Fragment {
         Button signup = v.findViewById(R.id.signupBtnSignup);
 
         // Get text fill-in fields and add them to list for parsing
-        usernameBox = (RelativeLayout) v.findViewById(R.id.usernameBox);
-        passwordBox = (RelativeLayout) v.findViewById(R.id.passwordBox);
-        retypePasswordBox = (RelativeLayout) v.findViewById(R.id.passwordRetypeBox);
-        emailBox = (RelativeLayout) v.findViewById(R.id.emailBox);
-        fillBoxes = new ArrayList<RelativeLayout>();
+        usernameBox = v.findViewById(R.id.usernameBox);
+        passwordBox =  v.findViewById(R.id.passwordBox);
+        retypePasswordBox = v.findViewById(R.id.passwordRetypeBox);
+        emailBox = v.findViewById(R.id.emailBox);
+        fillBoxes = new ArrayList<>();
         fillBoxes.add(usernameBox);
         fillBoxes.add(passwordBox);
         fillBoxes.add(retypePasswordBox);
@@ -134,7 +138,7 @@ public class Signup extends Fragment {
                 }
                 else
                 {
-
+                    Toast.makeText(getActivity(), "Inputs are not valid!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

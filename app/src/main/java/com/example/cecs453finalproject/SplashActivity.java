@@ -10,6 +10,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+
+/*
+*   Splash screen functionality, extends AppCompatActivity.
+* */
 public class SplashActivity extends AppCompatActivity {
 
 

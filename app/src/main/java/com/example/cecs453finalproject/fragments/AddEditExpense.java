@@ -23,6 +23,8 @@ import java.util.List;
 
 
 /**
+ * Allows the user to edit existing expenses and to add new expenses.
+ *
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * {@link AddEditExpense.OnFragmentInteractionListener} interface
@@ -91,7 +93,7 @@ public class AddEditExpense extends Fragment implements MyRecyclerViewAdapter.It
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_addedit_expense, container, false);
 
-        mItemsList = (RecyclerView) v.findViewById(R.id.expense_recycler_view);
+        mItemsList = v.findViewById(R.id.expense_recycler_view);
         mItemsList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         //TODO: DELETE AFTER TESTING IS COMPLETE
