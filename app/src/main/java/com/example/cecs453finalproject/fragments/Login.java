@@ -92,7 +92,7 @@ public class Login extends Fragment {
         // Make drawer invisible until login is successful
         ((MainActivity) getActivity()).setDrawerLocked(true);
 
-        //TODO: DELETE WHEN TESTING PHASE IS OVER
+        //Print all users for testing information
         for (User user : userList)
         {
             Log.e(TAG,"ID: " + user.getId() +
@@ -101,7 +101,7 @@ public class Login extends Fragment {
                     "\nEmail: " + user.getEmail()+
                     "\nIncome: " + user.getIncome() +"\n");
         }
-        // TODO: TO HERE
+
 
         Button signup = v.findViewById(R.id.signupBtnLogin);
         Button login = v.findViewById(R.id.loginBtnLogin);
