@@ -1,5 +1,7 @@
 package com.example.cecs453finalproject.classes;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -93,6 +95,7 @@ public class Transaction implements Serializable {
     public void setDateObject(String dateString) {
         try {
             dateObject = new SimpleDateFormat("MM/dd/yyyy").parse(dateString);
+            Log.e(TAG,"Parsed Date");
         } catch (ParseException e) {
             e.printStackTrace();
         }

@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import com.example.cecs453finalproject.database.DBHelper;
 import com.example.cecs453finalproject.fragments.AddEditCategory;
 import com.example.cecs453finalproject.fragments.AppSettings;
+import com.example.cecs453finalproject.fragments.ByMonthChart;
 import com.example.cecs453finalproject.fragments.DailyExpense;
 import com.example.cecs453finalproject.fragments.Expenses;
 import com.example.cecs453finalproject.fragments.Login;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity
         Signup.OnFragmentInteractionListener, AppSettings.OnFragmentInteractionListener,
         Expenses.OnFragmentInteractionListener, Reports.OnFragmentInteractionListener,
         AddEditCategory.OnFragmentInteractionListener, DailyExpense.OnFragmentInteractionListener,
-        MonthlyIncome.OnFragmentInteractionListener, DrawerLocker {
+        MonthlyIncome.OnFragmentInteractionListener, DrawerLocker, ByMonthChart.OnFragmentInteractionListener {
 
     DBHelper dbHelper;
     private String loggedInUsername;
@@ -142,11 +143,8 @@ public class MainActivity extends AppCompatActivity
             fragment.setArguments(bundle);
         }
 
-
-
         if(fragment != null) {
 
-            fragmentManager.popBackStack();
             fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, fragment).commit();
         }
 

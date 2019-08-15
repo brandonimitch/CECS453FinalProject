@@ -1,19 +1,18 @@
 package com.example.cecs453finalproject.fragments;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
 
+import com.anychart.AnyChart;
+import com.anychart.AnyChartView;
+import com.anychart.chart.common.dataentry.DataEntry;
+import com.anychart.chart.common.dataentry.ValueDataEntry;
+import com.anychart.charts.Pie;
 import com.example.cecs453finalproject.MainActivity;
 import com.example.cecs453finalproject.R;
 import com.example.cecs453finalproject.classes.Category;
@@ -29,19 +28,16 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Reports.OnFragmentInteractionListener} interface
+ * {@link ByCategoryChart.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link Reports#newInstance} factory method to
+ * Use the {@link ByCategoryChart#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Reports extends Fragment implements AdapterView.OnItemSelectedListener,
-        ByMonthChart.OnFragmentInteractionListener{
-
+public class ByCategoryChart extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static final String TAG = "Reports";
     private Long mUserID;
     private String mUsername;
 
@@ -49,17 +45,14 @@ public class Reports extends Fragment implements AdapterView.OnItemSelectedListe
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private Reports.OnFragmentInteractionListener mListener;
     private TransactionDAO mTransactionDAO;
     private UsersDAO mUserDAO;
     private CategoryDAO mCategoryDAO;
     private List<Transaction> mTransactionList;
     private List<Category> mCategoryList;
 
-    // Widgets
-    private Spinner mReportSpinner;
-
-    public Reports() {
+    public ByCategoryChart() {
         // Required empty public constructor
     }
 
@@ -69,11 +62,11 @@ public class Reports extends Fragment implements AdapterView.OnItemSelectedListe
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Reports.
+     * @return A new instance of fragment ByMonthChart.
      */
     // TODO: Rename and change types and number of parameters
-    public static Reports newInstance(String param1, String param2) {
-        Reports fragment = new Reports();
+    public static ByMonthChart newInstance(String param1, String param2) {
+        ByMonthChart fragment = new ByMonthChart();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -104,111 +97,61 @@ public class Reports extends Fragment implements AdapterView.OnItemSelectedListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_reports, container, false);
+        View view = inflater.inflate(R.layout.fragment_by_category_chart, container, false);
 
-        mReportSpinner = (Spinner) v.findViewById(R.id.chart_picker);
+        AnyChartView mChart = (AnyChartView) view.findViewById(R.id.by_category_chart);
 
-        ArrayList<String> chartTypes = new ArrayList<>();
-        chartTypes.add("Choose Report");
-        chartTypes.add("By Category");
-        chartTypes.add("By Month");
-        chartTypes.add("By Monthly Savings");
+        List<DataEntry> data = new ArrayList<>();
+        Pie pie = AnyChart.pie();
+        pie.title("Expenses By Category");
+        pie.title().fontColor("#B4AB8E");
+        pie.title().fontSize(26);
+        pie.title().padding(0d, 0d, 15d, 0d);
+        pie.title().align("center");
+        pie.legend().enabled(true);
+        pie.legend().titleSeparator(true);
+        pie.legend().position("right");
+        pie.legend().align("center");
+        pie.legend().itemsLayout("vertical");
+        pie.legend().title().text("Categories");
+        pie.legend().title().enabled(true);
+        pie.legend().title().fontSize(22);
+        pie.legend().title().fontColor("#B4AB8E");
+        pie.legend().title().hAlign("center");
+        pie.background().fill("#232426");
+        for (Transaction transaction : mTransactionList)
+        {
+            data.add(new ValueDataEntry(transaction.getCategory(),
+                    transaction.getAmount()));
+        }
+        pie.data(data);
+        mChart.setChart(pie);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mReportSpinner.getContext(),
-                R.layout.spinner_drop_item,
-                chartTypes){
-            @Override
-            public boolean isEnabled(int position){
-                if(position == 0)
-                {
-                    // Disable the first item from Spinner
-                    // First item will be use for hint
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-            @Override
-            public View getDropDownView(int position, View convertView,
-                                        ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);
-                TextView tv = (TextView) view;
-                if(position == 0){
-                    // Set the hint text color gray
-                    tv.setTextColor(Color.GRAY);
-                }
-                else {
-                    tv.setTextColor(Color.BLACK);
-                }
-                return view;
-            }
-        };
-        mReportSpinner.setAdapter(adapter);
-        mReportSpinner.setOnItemSelectedListener(this);
-
-        return v;
+        return view;
     }
 
-
+    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
     }
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof ByMonthChart.OnFragmentInteractionListener) {
+            mListener = (Reports.OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
     }
 
-
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        Fragment fragment = null;
-        switch (i)
-        {
-            // By Category
-            case 1:
-                fragment = new ByCategoryChart();
-                break;
-            // By Month
-            case 2:
-                fragment = new ByMonthChart();
-                break;
-            default:
-                break;
-
-        }
-
-        if(fragment != null) {
-            fragmentManager.beginTransaction().replace(R.id.chart_container, fragment).commit();
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 
     /**

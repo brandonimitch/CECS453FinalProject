@@ -83,8 +83,6 @@ public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClic
         mTransactionList = mTransactionDAO.getUserTransactions(mUserID);
         mCategoryList = mCategoryDAO.getUserCategories(mUserID);
 
-        // TODO: DELETE AFTER TESTING
-        mTransactionDAO.deleteAllUserTransactions(mUserID);
     }
 
     @Override
@@ -95,35 +93,35 @@ public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClic
 
         mItemsList = (RecyclerView) v.findViewById(R.id.expense_recycler_view);
         mItemsList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        final MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(this, mTransactionList,
-                mCategoryList,this);
-
-        mItemsList.setAdapter(adapter);
 
         //TODO: DELETE AFTER TESTING IS COMPLETE
-        Transaction newTransaction0 = mTransactionDAO.createTransaction(mUserID,"07/07/2019",
-                "Test Expense","Birthday", 1, 100.00);
-        Transaction newTransaction1 = mTransactionDAO.createTransaction(mUserID,"06/08/2019",
-                "Vons Grocery Store","Grocery", -1, 198.46);
-        Transaction newTransaction2 = mTransactionDAO.createTransaction(mUserID,"04/07/2019",
-                "Gift from Auntie Debbie Just need to make this longer","Birthday", 1, 250.00);
-        Transaction newTransaction3 = mTransactionDAO.createTransaction(mUserID,"03/08/2019",
-                "Albertsons","Grocery", -1, 198.46);
-        Transaction newTransaction4 = mTransactionDAO.createTransaction(mUserID,"06/07/2019",
-                "Panama Joe's","Bar", -1, 34.56);
-        Transaction newTransaction5 = mTransactionDAO.createTransaction(mUserID,"08/08/2019",
-                "Uber","Ride Share", -1, 7.86);
+        if (mTransactionList.size() == 0)
+        {
+            Transaction newTransaction0 = mTransactionDAO.createTransaction(mUserID,"07/07/2019",
+                    "Test Expense","Birthday", 1, 100.00);
+            Transaction newTransaction1 = mTransactionDAO.createTransaction(mUserID,"06/08/2019",
+                    "Vons Grocery Store","Grocery", -1, 198.46);
+            Transaction newTransaction2 = mTransactionDAO.createTransaction(mUserID,"04/07/2019",
+                    "Gift from Auntie Debbie Just need to make this longer","Birthday", 1, 250.00);
+            Transaction newTransaction3 = mTransactionDAO.createTransaction(mUserID,"03/08/2019",
+                    "Albertsons","Grocery", -1, 198.46);
+            Transaction newTransaction4 = mTransactionDAO.createTransaction(mUserID,"06/07/2019",
+                    "Panama Joe's","Bar", -1, 34.56);
+            Transaction newTransaction5 = mTransactionDAO.createTransaction(mUserID,"08/08/2019",
+                    "Uber","Ride Share", -1, 7.86);
 
-
-        mTransactionList.add(newTransaction0);
-        mTransactionList.add(newTransaction1);
-        mTransactionList.add(newTransaction2);
-        mTransactionList.add(newTransaction3);
-        mTransactionList.add(newTransaction4);
-        mTransactionList.add(newTransaction5);
-
+            mTransactionList.add(newTransaction0);
+            mTransactionList.add(newTransaction1);
+            mTransactionList.add(newTransaction2);
+            mTransactionList.add(newTransaction3);
+            mTransactionList.add(newTransaction4);
+            mTransactionList.add(newTransaction5);
+        }
         // TODO: TO HERE
 
+        MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(this, mTransactionList,
+                mCategoryList,this);
+        mItemsList.setAdapter(adapter);
         return v;
     }
 
