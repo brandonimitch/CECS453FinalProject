@@ -17,7 +17,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -134,16 +133,7 @@ public class Signup extends Fragment {
                     String password = ((EditText) getView().findViewById(R.id.passwordEditTextSignup)).getText().toString();
                     String email = ((EditText) getView().findViewById(R.id.emailEditTextSignup)).getText().toString();
 
-                    User user = mUserDAO.createUser(username, password, email,0.0);
-
-                    // TODO: Delete after checking username is in database
-                    User userCheck = mUserDAO.getUserByID(user.getId());
-
-                    Log.e(TAG, "User created with. ID#" + userCheck.getId() +
-                            "\nUsername: " +  userCheck.getUsername() +
-                            "\nPassword: " + userCheck.getPassword() +
-                            "\nEmail: " + userCheck.getEmail());
-                    // TODO: TO HERE
+                    mUserDAO.createUser(username, password, email,0.0);
 
                     FragmentManager fragmentManager = getFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, new Login()).commit();
