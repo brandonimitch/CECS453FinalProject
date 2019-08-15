@@ -17,9 +17,9 @@ import android.view.MenuItem;
 
 import com.example.cecs453finalproject.database.DBHelper;
 import com.example.cecs453finalproject.fragments.AddEditCategory;
+import com.example.cecs453finalproject.fragments.AddEditExpense;
 import com.example.cecs453finalproject.fragments.AppSettings;
 import com.example.cecs453finalproject.fragments.DailyExpense;
-import com.example.cecs453finalproject.fragments.Expenses;
 import com.example.cecs453finalproject.fragments.Login;
 import com.example.cecs453finalproject.fragments.MonthlyIncome;
 import com.example.cecs453finalproject.fragments.Reports;
@@ -29,7 +29,7 @@ import com.example.cecs453finalproject.interfaces.DrawerLocker;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Login.OnFragmentInteractionListener,
         Signup.OnFragmentInteractionListener, AppSettings.OnFragmentInteractionListener,
-        Expenses.OnFragmentInteractionListener, Reports.OnFragmentInteractionListener,
+        AddEditExpense.OnFragmentInteractionListener, Reports.OnFragmentInteractionListener,
         AddEditCategory.OnFragmentInteractionListener, DailyExpense.OnFragmentInteractionListener,
         MonthlyIncome.OnFragmentInteractionListener, DrawerLocker {
 
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_expenses) {
 
-            fragment = new Expenses();
+            fragment = new AddEditExpense();
             fragment.setArguments(bundle);
 
         } else if (id == R.id.nav_reports) {

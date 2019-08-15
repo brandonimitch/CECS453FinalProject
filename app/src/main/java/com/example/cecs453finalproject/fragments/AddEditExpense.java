@@ -25,12 +25,12 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Expenses.OnFragmentInteractionListener} interface
+ * {@link AddEditExpense.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link Expenses#newInstance} factory method to
+ * Use the {@link AddEditExpense#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClickListener {
+public class AddEditExpense extends Fragment implements MyRecyclerViewAdapter.ItemClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String USER_ID = "param1";
@@ -48,7 +48,7 @@ public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClic
     private List<Category> mCategoryList;
     private RecyclerView mItemsList;
 
-    public Expenses() {
+    public AddEditExpense() {
         // Required empty public constructor
     }
 
@@ -58,11 +58,11 @@ public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClic
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Expenses.
+     * @return A new instance of fragment AddEditExpense.
      */
     // TODO: Rename and change types and number of parameters
-    public static Expenses newInstance(long param1, String param2) {
-        Expenses fragment = new Expenses();
+    public static AddEditExpense newInstance(long param1, String param2) {
+        AddEditExpense fragment = new AddEditExpense();
         Bundle args = new Bundle();
         args.putLong(USER_ID, param1);
         args.putString(USERNAME, param2);
@@ -91,7 +91,7 @@ public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClic
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_expenses, container, false);
+        View v = inflater.inflate(R.layout.fragment_addedit_expense, container, false);
 
         mItemsList = (RecyclerView) v.findViewById(R.id.expense_recycler_view);
         mItemsList.setLayoutManager(new LinearLayoutManager(getActivity()));

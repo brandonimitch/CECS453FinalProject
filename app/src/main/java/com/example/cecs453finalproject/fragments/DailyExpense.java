@@ -7,13 +7,16 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cecs453finalproject.MainActivity;
@@ -38,36 +41,46 @@ import java.util.List;
  * Use the {@link DailyExpense#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DailyExpense extends Fragment implements MyRecyclerViewAdapter.ItemClickListener {
+public class DailyExpense extends Fragment implements AdapterView.OnItemSelectedListener {
 
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String USER_ID = "param1";
-    private static final String USERNAME = "param2";
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+//    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+//    private static final String USER_ID = "param1";
+//    private static final String USERNAME = "param2";
+//    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+//    private static final String ARG_PARAM1 = "param1";
+//    private static final String ARG_PARAM2 = "param2";
+
+    // Fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "DailyExpense";
 
-    // TODO: Rename and change types of parameters
+    // Member userId and username variables.
     private Long mUserID;
     private String mUsername;
+    private String mParam1;
+    private String mParam2;
 
 
-    // Create variables for control objects.
-    private EditText categoryName;
-    private EditText expenseAmount;
-    private Button dailyExpenseBtn;
-    private Spinner spinner;
-    private String categoryNameEntered;
-    private double expenseAmountEntered;
-
-    private RecyclerView mItemsList;
-    private List<Transaction> mTransactionList;
+//    private RecyclerView mItemsList;
     private TransactionDAO mTransactionDAO;
     private UsersDAO mUserDAO;
     private CategoryDAO mCategoryDAO;
     private List<Category> mCategoryList;
-    private DailyExpense.OnFragmentInteractionListener mListener;
+    private List<Transaction> mTransactionList;
+    private OnFragmentInteractionListener mListener;
+
+    // Control objects.
+    private EditText categoryName;
+    private EditText expenseAmount;
+    private Button dailyExpenseBtn;
+    private Spinner spinner;
+    // Variables to capture user input from Edit Text objects.
+    private String categoryNameEntered;
+    private double expenseAmountEntered;
+
+
 
 
 
@@ -83,23 +96,24 @@ public class DailyExpense extends Fragment implements MyRecyclerViewAdapter.Item
      * @param param2 Parameter 2.
      * @return A new instance of fragment DailyExpense.
      */
-    // TODO: Rename and change types and number of parameters
-    public static DailyExpense newInstance(Long param1, String param2) {
+    public static DailyExpense newInstance(String param1, String param2) {
         DailyExpense fragment = new DailyExpense();
         Bundle args = new Bundle();
-        args.putLong(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mUserID = getArguments().getLong(USER_ID);
-//            mUsername = getArguments().getString(USERNAME);
-//        }
+
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
 
         mUserID = ((MainActivity) getActivity()).getLoggedInUserId();
         mUsername = ((MainActivity) getActivity()).getLoggedInUsername();
@@ -108,6 +122,7 @@ public class DailyExpense extends Fragment implements MyRecyclerViewAdapter.Item
         mTransactionDAO = new TransactionDAO(getActivity());
         mUserDAO = new UsersDAO(getActivity());
         mCategoryDAO = new CategoryDAO(getActivity());
+
         mTransactionList = mTransactionDAO.getUserTransactions(mUserID);
         mCategoryList = mCategoryDAO.getUserCategories(mUserID);
     }
@@ -119,62 +134,76 @@ public class DailyExpense extends Fragment implements MyRecyclerViewAdapter.Item
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_daily_expense, container, false);
-        View expenseView = inflater.inflate(R.layout.fragment_expenses, container, false);
 
-        // Define control objects.
-        dailyExpenseBtn = v.findViewById(R.id.daliyExpenseBtn);
-        categoryName = v.findViewById(R.id.dailyExpenseEditText1);
-        expenseAmount = v.findViewById(R.id.dailyExpenseEditText2);
+        dailyExpenseBtn =  v.findViewById(R.id.daliyExpenseBtn);
+        categoryName =  v.findViewById(R.id.dailyExpenseEditText1);
+        expenseAmount =  v.findViewById(R.id.dailyExpenseEditText2);
         spinner = v.findViewById(R.id.dailyExpenseSpinner);
 
+        ArrayList<String> categoryStrings = new ArrayList<>();
+        for (Category category : mCategoryList)
+        {
+            categoryStrings.add(category.getName());
+        }
 
-        mItemsList = expenseView.findViewById(R.id.expense_recycler_view);
-        mItemsList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        final MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(this, mTransactionList,
-                mCategoryList,this);
+        CategorySpinnerAdapter adapter = new CategorySpinnerAdapter(spinner.getContext(),
+                R.layout.spinner_drop_item, categoryStrings);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
 
-        mItemsList.setAdapter(adapter);
-
+        // Button functionality.
         dailyExpenseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
 
-                Context context = getActivity().getApplicationContext();
+                ArrayList<String> catStrings = new ArrayList<>();
+                for (Category category : mCategoryList) {
 
-                if (expenseAmount != null && categoryName != null) {
-
-                    if (categoryName.getText().toString().length() != 0) {
-
-                        categoryNameEntered = categoryName.getText().toString();
-
-                    } else if (categoryName.getText().toString().length() == 0) {
-
-                        Toast.makeText(context, "You must enter a category!", Toast.LENGTH_SHORT).show();
-
-                    } else if (expenseAmount.getText().toString().length() != 0) {
-
-                        expenseAmountEntered = Double.parseDouble(expenseAmount.getText().toString());
-
-                    } else if (expenseAmount.getText().toString().length() == 0) {
-
-                        Toast.makeText(context, "You must enter an amount in dollars!", Toast.LENGTH_SHORT).show();
-
-                    } else {
-
-                        // Database Transaction: add values to database.
-                        Transaction newTransaction0 = mTransactionDAO.createTransaction(mUserID,
-                                "7/10/2019", "New / Edit Expense", categoryNameEntered, -1, expenseAmountEntered);
-                        Toast.makeText(context, "Database updated " + categoryNameEntered + " with $" + expenseAmountEntered, Toast.LENGTH_SHORT).show();
-
-                    }
-
-                } else {
-
-                    Toast.makeText(context, "You must enter both category name and expense amount!", Toast.LENGTH_SHORT).show();
+                    catStrings.add(category.getName());
                 }
 
+                categoryNameEntered = categoryName.getText().toString();
+                expenseAmountEntered = Double.parseDouble(expenseAmount.getText().toString());
+
+                if (catStrings.contains(categoryNameEntered)) {
+
+
+                }
+
+
+//                String oldCat = spinner.getSelectedItem().toString();
+
+//                if (catStrings.contains(oldCat)) {
+//                    mCategoryDAO.updateCategory(mUserID, oldCat, categoryNameEntered);
+//                    Toast.makeText(view.getContext(),
+//                            oldCat + " has been replaced by " + categoryNameEntered,
+//                            Toast.LENGTH_SHORT)
+//                            .show();
+//                    Log.e(TAG, "Replace");
+//                    catStrings.remove(oldCat);
+//                    catStrings.add(newCat);
+//                } else {
+//                    Log.e(TAG, "New");
+//                    mCategoryDAO.createCategory(mUserID, newCat);
+//                    Toast.makeText(view.getContext(),
+//                            newCat + " has been added",
+//                            Toast.LENGTH_SHORT)
+//                            .show();
+//                    catStrings.add(newCat);
+//                }
+
+                // Reset Text field
+                newCategoryTextView.setText("");
+
+                //Update Spinner list
+                CategorySpinnerAdapter adapter = new CategorySpinnerAdapter(categorySpinner.getContext(),
+                        R.layout.spinner_drop_item, catStrings);
+                categorySpinner.setAdapter(adapter);
+
+                //Update mCategoryList
+                mCategoryList = mCategoryDAO.getUserCategories(mUserID);
             }
-        });
+        }
 
         return v;
     }
@@ -225,3 +254,4 @@ public class DailyExpense extends Fragment implements MyRecyclerViewAdapter.Item
         void onFragmentInteraction(Uri uri);
     }
 }
+

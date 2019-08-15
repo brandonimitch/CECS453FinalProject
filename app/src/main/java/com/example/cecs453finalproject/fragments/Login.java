@@ -132,7 +132,7 @@ public class Login extends Fragment {
                     ((MainActivity) getActivity()).setDrawerLocked(false);
 
                     FragmentManager fragmentManager = getFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, new Expenses()).commit();
+                    fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, new AddEditExpense()).commit();
                 }
             }
         });
