@@ -39,6 +39,7 @@ import com.example.cecs453finalproject.fragments.ByMonthChart;
 import com.example.cecs453finalproject.fragments.BySavingsChart;
 import com.example.cecs453finalproject.fragments.ChangePassword;
 import com.example.cecs453finalproject.fragments.DailyExpense;
+import com.example.cecs453finalproject.fragments.DeleteTransaction;
 import com.example.cecs453finalproject.fragments.Login;
 import com.example.cecs453finalproject.fragments.MonthlyIncome;
 import com.example.cecs453finalproject.fragments.Reports;
@@ -57,7 +58,8 @@ public class MainActivity extends AppCompatActivity
         AddEditCategory.OnFragmentInteractionListener, DailyExpense.OnFragmentInteractionListener,
         MonthlyIncome.OnFragmentInteractionListener, DrawerLocker,
         ByMonthChart.OnFragmentInteractionListener, ByCategoryChart.OnFragmentInteractionListener,
-        BySavingsChart.OnFragmentInteractionListener, ChangePassword.OnFragmentInteractionListener {
+        BySavingsChart.OnFragmentInteractionListener, ChangePassword.OnFragmentInteractionListener,
+        DeleteTransaction.OnFragmentInteractionListener {
 
     DBHelper dbHelper;
     private String loggedInUsername;
@@ -159,8 +161,8 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             loggedInUserId = 0;
             loggedInUsername = null;
+            SaveSharedPreference.setUserName(this,"");
             fragment = new Login();
-
         }
         // Set target layout to correct fragment, set the arguments and pass the data.
         else if (id == R.id.nav_settings) {

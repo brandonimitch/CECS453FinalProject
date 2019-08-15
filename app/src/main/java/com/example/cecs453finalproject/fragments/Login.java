@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -118,6 +119,7 @@ public class Login extends Fragment {
 
         Button signup = v.findViewById(R.id.signupBtnLogin);
         Button login = v.findViewById(R.id.loginBtnLogin);
+        final CheckBox saveUsername = (CheckBox) v.findViewById(R.id.saveUsername);
 
         // Control fragment when SignUp Button is clicked
         signup.setOnClickListener(new View.OnClickListener() {
@@ -145,7 +147,11 @@ public class Login extends Fragment {
                     ((MainActivity) getActivity()).setLoggedInUserId(checkUser.getId());
                     ((MainActivity) getActivity()).setMonthlyIncome(checkUser.getIncome());
 
-                    SaveSharedPreference.setUserName(getContext(), checkUser.getUsername());
+                    if (saveUsername.isChecked())
+                    {
+                        SaveSharedPreference.setUserName(getContext(), checkUser.getUsername());
+                    }
+
 
                     FragmentManager fragmentManager = getFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, new AddEditExpense()).commit();

@@ -130,6 +130,17 @@ public class AppSettings extends Fragment {
             }
         });
 
+        // Set delete transaction button to open delete fragment.
+        Button deleteButton = v.findViewById(R.id.deleteExpenseBtn);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, new DeleteTransaction()).commit();
+            }
+        });
+
         return v;
     }
 
