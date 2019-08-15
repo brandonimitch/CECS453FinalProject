@@ -101,15 +101,27 @@ public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClic
         mItemsList.setAdapter(adapter);
 
         //TODO: DELETE AFTER TESTING IS COMPLETE
-        Transaction newTransaction0 = mTransactionDAO.createTransaction(mUserID,"7/7/2019",
-                "Test Expense","Category", -1, 100.00);
-        Transaction newTransaction1 = mTransactionDAO.createTransaction(mUserID,"7/8/2019",
-                "Vons Grocery Store","Category", -1, 198.46);
+        Transaction newTransaction0 = mTransactionDAO.createTransaction(mUserID,"07/07/2019",
+                "Test Expense","Birthday", 1, 100.00);
+        Transaction newTransaction1 = mTransactionDAO.createTransaction(mUserID,"06/08/2019",
+                "Vons Grocery Store","Grocery", -1, 198.46);
+        Transaction newTransaction2 = mTransactionDAO.createTransaction(mUserID,"04/07/2019",
+                "Gift from Auntie Debbie Just need to make this longer","Birthday", 1, 250.00);
+        Transaction newTransaction3 = mTransactionDAO.createTransaction(mUserID,"03/08/2019",
+                "Albertsons","Grocery", -1, 198.46);
+        Transaction newTransaction4 = mTransactionDAO.createTransaction(mUserID,"06/07/2019",
+                "Panama Joe's","Bar", -1, 34.56);
+        Transaction newTransaction5 = mTransactionDAO.createTransaction(mUserID,"08/08/2019",
+                "Uber","Ride Share", -1, 7.86);
+
 
         mTransactionList.add(newTransaction0);
         mTransactionList.add(newTransaction1);
+        mTransactionList.add(newTransaction2);
+        mTransactionList.add(newTransaction3);
+        mTransactionList.add(newTransaction4);
+        mTransactionList.add(newTransaction5);
 
-        mTransactionDAO.deleteAllUserTransactions(mUserID);
         // TODO: TO HERE
 
         return v;
