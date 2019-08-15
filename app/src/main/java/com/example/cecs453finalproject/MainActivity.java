@@ -106,31 +106,46 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        long customerId = getLoggedInUserId();
+        String username = getLoggedInUsername();
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = null;
+
+        Bundle bundle = new Bundle();
+        bundle.putString("username", username);
+        bundle.putLong("customerID", customerId);
+
 
         if (id == R.id.nav_home) {
             loggedInUserId = 0;
             loggedInUsername = null;
             fragment = new Login();
 
-        } // TODO: Do we need this in the navigation bar????
-//        else if (id == R.id.nav_signup) {
-//            fragment = new Signup();
-//
-//        }
-        //TODO: Pass Username and ID to each Fragment
+        }
+        // Set target layout to correct fragment, set the arguments and pass the data.
         else if (id == R.id.nav_settings) {
+
             fragment = new AppSettings();
+            fragment.setArguments(bundle);
+
         } else if (id == R.id.nav_expenses) {
+
             fragment = new Expenses();
+            fragment.setArguments(bundle);
+
         } else if (id == R.id.nav_reports) {
+
             fragment = new Reports();
+            fragment.setArguments(bundle);
         }
 
+
+
         if(fragment != null) {
+
             fragmentManager.popBackStack();
             fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, fragment).commit();
         }

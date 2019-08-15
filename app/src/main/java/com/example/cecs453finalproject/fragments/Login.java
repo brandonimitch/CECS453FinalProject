@@ -118,8 +118,8 @@ public class Login extends Fragment {
                 //TODO: DELETE AFTER TESTING IS COMPELETE
                 EditText userTest = (EditText) getView().findViewById(R.id.userNameEditTextLogin);
                 EditText passTest = (EditText) getView().findViewById(R.id.passwordEditTextLogin);
-                userTest.setText("testUser");
-                passTest.setText("password");
+//                userTest.setText("testUser");
+//                passTest.setText("password");
                 // TODO: TO HERE
 
                 String username = ((EditText) getView().findViewById(R.id.userNameEditTextLogin))

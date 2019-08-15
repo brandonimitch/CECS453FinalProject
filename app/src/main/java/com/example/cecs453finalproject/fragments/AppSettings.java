@@ -22,20 +22,19 @@ import com.example.cecs453finalproject.R;
  * create an instance of this fragment.
  */
 public class AppSettings extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
+
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
     private OnFragmentInteractionListener mListener;
 
-    public AppSettings() {
-        // Required empty public constructor
-    }
+
+    // Required empty public constructor
+    public AppSettings() {}
+
 
     /**
      * Use this factory method to create a new instance of
@@ -45,7 +44,6 @@ public class AppSettings extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment AppSettings.
      */
-    // TODO: Rename and change types and number of parameters
     public static AppSettings newInstance(String param1, String param2) {
         AppSettings fragment = new AppSettings();
         Bundle args = new Bundle();
@@ -54,6 +52,7 @@ public class AppSettings extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,6 +63,7 @@ public class AppSettings extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,7 +71,13 @@ public class AppSettings extends Fragment {
         View v = inflater.inflate(R.layout.fragment_app_settings, container, false);
 
 
-        // Set daily expense button to open expense item fragment.
+        // Obtain username and customer ID from main activity.
+        String username = getArguments().getString("username");
+        Long customerId = getArguments().getLong("customerID");
+
+
+
+        // Set daily expense button to open daily expense fragment.
         Button dailyExpense = v.findViewById(R.id.dailyExpenseBtn);
         dailyExpense.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +100,7 @@ public class AppSettings extends Fragment {
             }
         });
 
-        // Set monthly income button to open expense item fragment.
+        // Set monthly income button to open monthly income fragment.
         Button monthlyIncome = v.findViewById(R.id.monthlyIncomeBtn);
         monthlyIncome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,12 +114,13 @@ public class AppSettings extends Fragment {
         return v;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
     }
+
 
     @Override
     public void onAttach(Context context) {
@@ -125,6 +132,7 @@ public class AppSettings extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
     }
+
 
     @Override
     public void onDetach() {

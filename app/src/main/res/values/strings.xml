@@ -33,6 +33,7 @@
     <string name="monthly_income">Add / Edit Monthly Income</string>
     <string name="monthly_income_amount">Enter Monthly Income Amount</string>
     <string name="reports">Reports</string>
+    <string name="project_title">Expense Tracker</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -50,7 +50,6 @@ public class MonthlyIncome extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment MonthlyIncome.
      */
-    // TODO: Rename and change types and number of parameters
     public static MonthlyIncome newInstance(String param1, String param2) {
         MonthlyIncome fragment = new MonthlyIncome();
         Bundle args = new Bundle();
@@ -91,7 +90,7 @@ public class MonthlyIncome extends Fragment {
         return v;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
