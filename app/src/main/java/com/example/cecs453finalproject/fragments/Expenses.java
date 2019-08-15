@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.cecs453finalproject.MainActivity;
 import com.example.cecs453finalproject.R;
 import com.example.cecs453finalproject.adapters.MyRecyclerViewAdapter;
 import com.example.cecs453finalproject.classes.Category;
@@ -73,14 +74,13 @@ public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClic
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mUserID = getArguments().getLong(USER_ID);
-            mUsername = getArguments().getString(USERNAME);
-        }
+        mUserID = ((MainActivity) getActivity()).getLoggedInUserId();
+        mUsername = ((MainActivity) getActivity()).getLoggedInUsername();
 
         mTransactionDAO = new TransactionDAO(getActivity());
         mUserDAO = new UsersDAO(getActivity());
         mCategoryDAO = new CategoryDAO(getActivity());
+
         mTransactionList = mTransactionDAO.getUserTransactions(mUserID);
         mCategoryList = mCategoryDAO.getUserCategories(mUserID);
         // TODO: DELETE AFTER TESTING
@@ -100,11 +100,16 @@ public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClic
         mItemsList.setAdapter(adapter);
 
         //TODO: DELETE AFTER TESTING IS COMPLETE
-        Transaction newTransaction = mTransactionDAO.createTransaction(mUserID,"7/7/2019",
+        Transaction newTransaction0 = mTransactionDAO.createTransaction(mUserID,"7/7/2019",
                 "Test Expense","Category", -1, 100.00);
-        mTransactionList.add(newTransaction);
+        Transaction newTransaction1 = mTransactionDAO.createTransaction(mUserID,"7/8/2019",
+                "Vons Grocery Store","Grocery", -1, 198.46);
+
+        mTransactionList.add(newTransaction0);
+        mTransactionList.add(newTransaction1);
 
         mTransactionDAO.deleteAllUserTransactions(mUserID);
+        // TODO: TO HERE
 
         return v;
     }
@@ -153,4 +158,5 @@ public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClic
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }

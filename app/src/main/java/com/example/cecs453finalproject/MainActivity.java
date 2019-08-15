@@ -1,6 +1,8 @@
 package com.example.cecs453finalproject;
 
 //import android.app.FragmentManager;
+
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -11,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -23,15 +26,19 @@ import com.example.cecs453finalproject.fragments.Login;
 import com.example.cecs453finalproject.fragments.MonthlyIncome;
 import com.example.cecs453finalproject.fragments.Reports;
 import com.example.cecs453finalproject.fragments.Signup;
+import com.example.cecs453finalproject.interfaces.DrawerLocker;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Login.OnFragmentInteractionListener,
         Signup.OnFragmentInteractionListener, AppSettings.OnFragmentInteractionListener,
         Expenses.OnFragmentInteractionListener, Reports.OnFragmentInteractionListener,
         ExpenseItem.OnFragmentInteractionListener, DailyExpense.OnFragmentInteractionListener,
-        MonthlyIncome.OnFragmentInteractionListener{
+        MonthlyIncome.OnFragmentInteractionListener, DrawerLocker {
 
     DBHelper dbHelper;
+    private String loggedInUsername;
+    private long loggedInUserId;
+    private boolean showOptionsMenu = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +84,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return showOptionsMenu;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -90,8 +102,6 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, new AppSettings()).commit();
         }
 
-
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -104,10 +114,17 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
 
         if (id == R.id.nav_home) {
+            loggedInUserId = 0;
+            loggedInUsername = null;
             fragment = new Login();
-        } else if (id == R.id.nav_signup) {
-            fragment = new Signup();
-        } else if (id == R.id.nav_settings) {
+
+        } // TODO: Do we need this in the navigation bar????
+//        else if (id == R.id.nav_signup) {
+//            fragment = new Signup();
+//
+//        }
+        //TODO: Pass Username and ID to each Fragment
+        else if (id == R.id.nav_settings) {
             fragment = new AppSettings();
         } else if (id == R.id.nav_expenses) {
             fragment = new Expenses();
@@ -130,4 +147,43 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    public String getLoggedInUsername() {
+        return loggedInUsername;
+    }
+
+    public void setLoggedInUsername(String loggedInUsername) {
+        this.loggedInUsername = loggedInUsername;
+    }
+
+    public long getLoggedInUserId() {
+        return loggedInUserId;
+    }
+
+    public void setLoggedInUserId(long loggedInUserId) {
+        this.loggedInUserId = loggedInUserId;
+    }
+
+    @Override
+    public void setDrawerLocked(boolean enabled) {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (enabled) {
+            invalidateOptionsMenu();
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            showOptionsMenu = false;
+        } else {
+            invalidateOptionsMenu();
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            showOptionsMenu = true;
+        }
+    }
+
+    public int getScreenWidth()
+    {
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return size.x;
+    }
 }
+
+

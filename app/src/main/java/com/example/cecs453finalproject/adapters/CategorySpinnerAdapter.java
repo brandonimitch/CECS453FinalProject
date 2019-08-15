@@ -58,6 +58,8 @@ public class CategorySpinnerAdapter extends ArrayAdapter<String> {
                                 ViewGroup parent) {
         View view = super.getDropDownView(position, convertView, parent);
         TextView tv = (TextView) view;
+        tv.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+
         if(position == 0){
             // Set the hint text color gray
             tv.setTextColor(Color.GRAY);

@@ -9,10 +9,6 @@
             android:icon="@drawable/ic_menu_send"
             android:title="@string/menu_login" />
         <item
-            android:id="@+id/nav_signup"
-            android:icon="@drawable/ic_menu_send"
-            android:title="@string/menu_signup" />
-        <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_menu_send"
             android:title="@string/menu_app_settings" />
