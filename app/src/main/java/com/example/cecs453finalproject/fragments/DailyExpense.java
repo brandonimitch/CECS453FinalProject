@@ -168,42 +168,43 @@ public class DailyExpense extends Fragment implements AdapterView.OnItemSelected
                 if (catStrings.contains(categoryNameEntered)) {
 
 
+                } else {
+
+
+                    String oldCat = spinner.getSelectedItem().toString();
+
+                    if (catStrings.contains(oldCat)) {
+                        mCategoryDAO.updateCategory(mUserID, oldCat, categoryNameEntered);
+                        Toast.makeText(view.getContext(),
+                                oldCat + " has been replaced by " + categoryNameEntered,
+                                Toast.LENGTH_SHORT)
+                                .show();
+                        Log.e(TAG, "Replace");
+                        catStrings.remove(oldCat);
+                        catStrings.add(categoryNameEntered);
+                    } else {
+                        Log.e(TAG, "New");
+                        mCategoryDAO.createCategory(mUserID, categoryNameEntered);
+                        Toast.makeText(view.getContext(),
+                                categoryNameEntered + " has been added",
+                                Toast.LENGTH_SHORT)
+                                .show();
+                        catStrings.add(categoryNameEntered);
+                    }
+
+                    // Reset Text field
+                    categoryName.setText("");
+
+                    //Update Spinner list
+                    CategorySpinnerAdapter adapter = new CategorySpinnerAdapter(spinner.getContext(),
+                            R.layout.spinner_drop_item, catStrings);
+                    spinner.setAdapter(adapter);
+
+                    //Update mCategoryList
+                    mCategoryList = mCategoryDAO.getUserCategories(mUserID);
                 }
-
-
-//                String oldCat = spinner.getSelectedItem().toString();
-
-//                if (catStrings.contains(oldCat)) {
-//                    mCategoryDAO.updateCategory(mUserID, oldCat, categoryNameEntered);
-//                    Toast.makeText(view.getContext(),
-//                            oldCat + " has been replaced by " + categoryNameEntered,
-//                            Toast.LENGTH_SHORT)
-//                            .show();
-//                    Log.e(TAG, "Replace");
-//                    catStrings.remove(oldCat);
-//                    catStrings.add(newCat);
-//                } else {
-//                    Log.e(TAG, "New");
-//                    mCategoryDAO.createCategory(mUserID, newCat);
-//                    Toast.makeText(view.getContext(),
-//                            newCat + " has been added",
-//                            Toast.LENGTH_SHORT)
-//                            .show();
-//                    catStrings.add(newCat);
-//                }
-
-                // Reset Text field
-                newCategoryTextView.setText("");
-
-                //Update Spinner list
-                CategorySpinnerAdapter adapter = new CategorySpinnerAdapter(categorySpinner.getContext(),
-                        R.layout.spinner_drop_item, catStrings);
-                categorySpinner.setAdapter(adapter);
-
-                //Update mCategoryList
-                mCategoryList = mCategoryDAO.getUserCategories(mUserID);
             }
-        }
+        });
 
         return v;
     }
@@ -234,8 +235,18 @@ public class DailyExpense extends Fragment implements AdapterView.OnItemSelected
         mListener = null;
     }
 
-    @Override
+
     public void onItemClick(View view, int position) {
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 

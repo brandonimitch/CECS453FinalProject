@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.example.cecs453finalproject.classes.Category;
 import com.example.cecs453finalproject.classes.Expense;
+import com.example.cecs453finalproject.classes.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,10 +54,10 @@ public class ExpenseDAO {
     }
 
 
-    public Expense editOrCreateExpense(long userID, String name, Double amount) {
+    public Category editOrCreateExpense(long userID, String name, Double amount) {
 
         Expense expense = new Expense();
-        boolean newCategory = false;
+        boolean newCategoryBool = false;
 
         CategoryDAO category = new CategoryDAO(mContext);
         List<Category> currentCategories = category.getUserCategories(userID);
@@ -69,11 +70,11 @@ public class ExpenseDAO {
 
             } else {
 
-                newCategory = true;
+                newCategoryBool = true;
             }
         }
 
-        if (newCategory) {
+        if (newCategoryBool) {
 
             ContentValues values = new ContentValues();
             values.put(DBHelper.COLUMN_CATEGORY_NAME, name);
@@ -87,7 +88,7 @@ public class ExpenseDAO {
             Category newCategory = cursorToCategory(cursor);
             cursor.close();
 
-//            expense.setExpense(amount);
+            expense.setExpense(amount);
 
             return newCategory;
         }
@@ -96,29 +97,45 @@ public class ExpenseDAO {
     }
 
 
-    public List<Expense> getExpense(String name) {
 
-        List<Expense> listExpense = new ArrayList<>();
-        Cursor cursor = mDatabase.rawQuery("SELECT* FROM " + DBHelper.TABLE_CATEGORIES, null);      // TABLE_EXPENSE??? NO OPTION HERE
+    private Category cursorToCategory(Cursor cursor) {
 
-        if(cursor.moveToFirst())
+        Category category = new Category();
+        category.setId(cursor.getLong(0));
+        category.setName(cursor.getString(1));
+        long userID = cursor.getLong(2);
+        UsersDAO dao = new UsersDAO(mContext);
+        User user = dao.getUserByID(userID);
+        if (user != null)
         {
-            while (!cursor.isAfterLast())
-            {
-                Category category = cursorToCategory(cursor);
-                listExpense.add(category);
-                cursor.moveToNext();
-            }
+            category.setUser(user);
         }
-        else
-        {
-            listExpense.add(new Expense());
-        }
-
-        cursor.close();
-
-        return listExpense;
+        return category;
     }
+
+//    public List<Expense> getExpense(String name) {
+////
+////        List<Expense> listExpense = new ArrayList<>();
+////        Cursor cursor = mDatabase.rawQuery("SELECT* FROM " + DBHelper.TABLE_CATEGORIES, null);      // TABLE_EXPENSE??? NO OPTION HERE
+////
+////        if(cursor.moveToFirst())
+////        {
+////            while (!cursor.isAfterLast())
+////            {
+////                Expense expense = cursorToCategory(cursor);
+////                listExpense.add(expense);
+////                cursor.moveToNext();
+////            }
+////        }
+////        else
+////        {
+////            listExpense.add(new Expense());
+////        }
+////
+////        cursor.close();
+////
+////        return listExpense;
+////    }
 
 
 

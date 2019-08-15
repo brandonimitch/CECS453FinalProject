@@ -12,13 +12,14 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "CECS453_Final_Expense_Tracker_Rev2.db";
     private static final int DB_VERSION = 1;
 
-    // User Datbase column names
+    // User Database column names
     public static final String TABLE_USERS = "users";
     public static final String COLUMN_USER_ID = "id_user";
     public static final String COLUMN_USERNAME = "user_name";
     public static final String COLUMN_USER_PASSWORD = "user_password";
     public static final String COLUMN_USER_EMAIL = "user_email";
     public static final String COLUMN_USER_INCOME = "user_income";
+    public static final String COLUMN_USER_EXPENSE = "user_expense";
 
     // Transaction database column names
     public static final String TABLE_TRANSACTIONS = "transactions";
