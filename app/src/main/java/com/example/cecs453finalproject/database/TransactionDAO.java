@@ -125,7 +125,6 @@ public class TransactionDAO {
 
         cursor.close();
         return listTransaction;
-
     }
 
     private Transaction cursorToTransaction(Cursor cursor)

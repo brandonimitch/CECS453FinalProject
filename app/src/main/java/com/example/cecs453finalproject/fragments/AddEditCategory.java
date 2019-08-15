@@ -206,7 +206,7 @@ public class AddEditCategory extends Fragment implements AdapterView.OnItemSelec
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-
+        categorySpinner.setSelection(categorySpinner.getChildCount()-1);
     }
 
     /**

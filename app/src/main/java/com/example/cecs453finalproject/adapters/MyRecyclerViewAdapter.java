@@ -8,14 +8,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.cecs453finalproject.MainActivity;
 import com.example.cecs453finalproject.R;
 import com.example.cecs453finalproject.classes.Category;
 import com.example.cecs453finalproject.classes.Transaction;
-import com.example.cecs453finalproject.classes.User;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
@@ -25,17 +32,48 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     private List<Transaction> mData;
     private List<Category> mCategories;
     private ItemClickListener mClickListener;
-    private User mUser;
+    private Long mUserId;
     private CategorySpinnerAdapter spinnerAdapter;
     private Fragment mFragment;
 
     public MyRecyclerViewAdapter(Fragment fragment, List<Transaction> data, List<Category> categories,
                                  ItemClickListener clickListener) {
         this.mFragment = fragment;
-        this.mData = data;
         this.mClickListener = clickListener;
         this.mCategories = categories;
-        this.mUser = categories.get(0).getUser();
+        this.mUserId = ((MainActivity) fragment.getActivity()).getLoggedInUserId();
+
+        // Sort Data by Date by descending order
+        Collections.sort(data, new Comparator<Transaction>() {
+            public int compare(Transaction o1, Transaction o2) {
+                return o2.getDateObject().compareTo(o1.getDateObject());
+            }
+        });
+
+        this.mData = data;
+    }
+
+    private HashMap<Long, Date> sortListbyDate(HashMap<Long, Date> hm)
+    {
+        // Create a list from elements of HashMap
+        List<Map.Entry<Long, Date> > list =
+                new LinkedList<Map.Entry<Long, Date> >(hm.entrySet());
+
+        // Sort the list
+        Collections.sort(list, new Comparator<Map.Entry<Long, Date> >() {
+            public int compare(Map.Entry<Long, Date> o1,
+                               Map.Entry<Long, Date> o2)
+            {
+                return (o2.getValue()).compareTo(o1.getValue());
+            }
+        });
+
+        // put data from sorted list to hashmap
+        HashMap<Long, Date> temp = new LinkedHashMap<Long, Date>();
+        for (Map.Entry<Long, Date> aa : list) {
+            temp.put(aa.getKey(), aa.getValue());
+        }
+        return temp;
     }
 
     @Override

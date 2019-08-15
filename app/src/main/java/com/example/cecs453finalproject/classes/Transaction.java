@@ -1,6 +1,9 @@
 package com.example.cecs453finalproject.classes;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Transaction implements Serializable {
 
@@ -14,6 +17,7 @@ public class Transaction implements Serializable {
     private int mType;
     private double mAmount;
     private User mUser;
+    private Date dateObject;
 
     public Transaction() {}
 
@@ -39,6 +43,7 @@ public class Transaction implements Serializable {
 
     public void setDate(String mDate) {
         this.mDate = mDate;
+        setDateObject(mDate);
     }
 
     public String getDescr() {
@@ -79,6 +84,23 @@ public class Transaction implements Serializable {
 
     public void setUser(User mUser) {
         this.mUser = mUser;
+    }
+
+    public Date getDateObject() {
+        return dateObject;
+    }
+
+    public void setDateObject(String dateString) {
+        try {
+            dateObject = new SimpleDateFormat("MM/dd/yyyy").parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setDateObject(Date dateObject)
+    {
+        this.dateObject = dateObject;
     }
 }
 
