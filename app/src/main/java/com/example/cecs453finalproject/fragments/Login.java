@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -78,6 +79,8 @@ public class Login extends Fragment {
         mUserDAO = new UsersDAO(getActivity());
         userList = mUserDAO.getAllUsers();
 
+        SaveSharedPreference.setUserName(getContext(),"");
+
     }
 
     @Override
@@ -102,6 +105,7 @@ public class Login extends Fragment {
 
         Button signup = v.findViewById(R.id.signupBtnLogin);
         Button login = v.findViewById(R.id.loginBtnLogin);
+        final CheckBox checkBox = v.findViewById(R.id.saveUsername);
 
         // Control fragment when SignUp Button is clicked
         signup.setOnClickListener(new View.OnClickListener() {
@@ -117,12 +121,11 @@ public class Login extends Fragment {
             @Override
             public void onClick(View v) {
 
-               /* //TODO: DELETE AFTER TESTING IS COMPELETE
+ /*              // AutoLogin Button Feature for testing
                 EditText userTest = (EditText) getView().findViewById(R.id.userNameEditTextLogin);
                 EditText passTest = (EditText) getView().findViewById(R.id.passwordEditTextLogin);
                 userTest.setText(userList.get(0).getUsername());
-                passTest.setText(userList.get(0).getPassword());
-                // TODO: TO HERE*/
+                passTest.setText(userList.get(0).getPassword());*/
 
                 String username = ((EditText) getView().findViewById(R.id.userNameEditTextLogin))
                         .getText().toString();
@@ -136,7 +139,10 @@ public class Login extends Fragment {
                     ((MainActivity) getActivity()).setLoggedInUserId(checkUser.getId());
                     ((MainActivity) getActivity()).setMonthlyIncome(checkUser.getIncome());
 
-                    SaveSharedPreference.setUserName(getContext(), checkUser.getUsername());
+                    if (checkBox.isChecked())
+                    {
+                        SaveSharedPreference.setUserName(getContext(), checkUser.getUsername());
+                    }
 
                     FragmentManager fragmentManager = getFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, new AddEditExpense()).commit();
