@@ -90,15 +90,9 @@ public class Expenses extends Fragment implements MyRecyclerViewAdapter.ItemClic
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_expenses, container, false);
-
-        if (savedInstanceState != null) {
-
-            // Obtain username and customer ID from main activity.
-            String username = getArguments().getString("username");
-            Long customerId = getArguments().getLong("customerID");
-        }
 
 
         mItemsList = (RecyclerView) v.findViewById(R.id.expense_recycler_view);
