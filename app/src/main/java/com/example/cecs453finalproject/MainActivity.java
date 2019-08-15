@@ -15,12 +15,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.cecs453finalproject.classes.SaveSharedPreference;
+import com.example.cecs453finalproject.classes.User;
 import com.example.cecs453finalproject.database.DBHelper;
+import com.example.cecs453finalproject.database.UsersDAO;
 import com.example.cecs453finalproject.fragments.AddEditCategory;
+import com.example.cecs453finalproject.fragments.AddEditExpense;
 import com.example.cecs453finalproject.fragments.AppSettings;
 import com.example.cecs453finalproject.fragments.ByMonthChart;
 import com.example.cecs453finalproject.fragments.DailyExpense;
-import com.example.cecs453finalproject.fragments.AddEditExpense;
 import com.example.cecs453finalproject.fragments.Login;
 import com.example.cecs453finalproject.fragments.MonthlyIncome;
 import com.example.cecs453finalproject.fragments.Reports;
@@ -63,12 +66,27 @@ public class MainActivity extends AppCompatActivity
 
         Fragment fragment;
 
-        if(savedInstanceState == null) {
+        if(SaveSharedPreference.getUserName(MainActivity.this).length() == 0)
+        {
             fragment = new Login();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, fragment).commit();
-
         }
+        else
+        {
+            fragment = new AddEditExpense();
+            String username = SaveSharedPreference.getUserName(this);
+            UsersDAO mUserDAO = new UsersDAO(this);
+
+            User checkUser = mUserDAO.getUserByUsername(username);
+
+            setDrawerLocked(false);
+            setLoggedInUsername(username);
+            setLoggedInUserId(checkUser.getId());
+            setMonthlyIncome(checkUser.getIncome());
+        }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.mainContentFrameContainer, fragment).commit();
+
     }
 
     @Override
