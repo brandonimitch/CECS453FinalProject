@@ -71,9 +71,12 @@ public class AppSettings extends Fragment {
         View v = inflater.inflate(R.layout.fragment_app_settings, container, false);
 
 
-        // Obtain username and customer ID from main activity.
-        String username = getArguments().getString("username");
-        Long customerId = getArguments().getLong("customerID");
+        if (savedInstanceState != null) {
+
+            // Obtain username and customer ID from main activity.
+            String username = getArguments().getString("username");
+            Long customerId = getArguments().getLong("customerID");
+        }
 
 
 

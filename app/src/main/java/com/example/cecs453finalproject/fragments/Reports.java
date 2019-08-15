@@ -68,10 +68,12 @@ public class Reports extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_reports, container, false);
 
+        if (savedInstanceState != null) {
 
-        // Obtain username and customer ID from main activity.
-        String username = getArguments().getString("username");
-        Long customerId = getArguments().getLong("customerID");
+            // Obtain username and customer ID from main activity.
+            String username = getArguments().getString("username");
+            Long customerId = getArguments().getLong("customerID");
+        }
 
         return v;
     }
