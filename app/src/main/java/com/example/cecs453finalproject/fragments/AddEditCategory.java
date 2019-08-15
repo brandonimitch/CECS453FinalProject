@@ -57,7 +57,6 @@ public class AddEditCategory extends Fragment implements AdapterView.OnItemSelec
 
     // Widgets
     Button submitButton;
-    TextView originalCategoryTextView;
     TextView newCategoryTextView;
     Spinner categorySpinner;
 
@@ -109,7 +108,6 @@ public class AddEditCategory extends Fragment implements AdapterView.OnItemSelec
         View view = inflater.inflate(R.layout.fragment_addedit_category, container, false);
 
         submitButton = (Button) view.findViewById(R.id.categorySubmitButton);
-        originalCategoryTextView = (TextView) view.findViewById(R.id.changeCategoryEditText);
         newCategoryTextView = (TextView) view.findViewById(R.id.newCategoryEditText);
         categorySpinner = (Spinner) view.findViewById(R.id.expenseCatSpinner);
 
@@ -118,7 +116,6 @@ public class AddEditCategory extends Fragment implements AdapterView.OnItemSelec
         {
             categoryStrings.add(category.getName());
         }
-        categoryStrings.add("Add New");
 
         CategorySpinnerAdapter adapter = new CategorySpinnerAdapter(categorySpinner.getContext(),
                 R.layout.spinner_drop_item, categoryStrings);
@@ -137,7 +134,7 @@ public class AddEditCategory extends Fragment implements AdapterView.OnItemSelec
                 }
 
                 String newCat = newCategoryTextView.getText().toString();
-                String oldCat = originalCategoryTextView.getText().toString();
+                String oldCat = categorySpinner.getSelectedItem().toString();
 
                 if (catStrings.contains(oldCat))
                 {
@@ -160,11 +157,8 @@ public class AddEditCategory extends Fragment implements AdapterView.OnItemSelec
                             .show();
                     catStrings.add(newCat);
                 }
-                catStrings.add("Add New");
-                Log.e(TAG, catStrings.toString());
 
-                // Reset Text fields
-                originalCategoryTextView.setText("");
+                // Reset Text field
                 newCategoryTextView.setText("");
 
                 //Update Spinner list
@@ -204,14 +198,9 @@ public class AddEditCategory extends Fragment implements AdapterView.OnItemSelec
         mListener = null;
     }
 
+    // TODO: Might not need this anymore
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        if (i != 0)
-        {
-            String chosenCategory = categorySpinner.getSelectedItem().toString();
-            originalCategoryTextView.setText(chosenCategory);
-            originalCategoryTextView.setEnabled(false);
-        }
 
     }
 

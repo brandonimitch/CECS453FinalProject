@@ -55,7 +55,6 @@ public class CategoryDAO {
         List<Category> currentCategories = getUserCategories(userID);
          for (Category cat : currentCategories)
          {
-             Log.e(TAG, cat.getName());
              if (cat.getName().equals(name))
              {
                  Log.e(TAG, "Category Exists already");
@@ -134,6 +133,12 @@ public class CategoryDAO {
 
     public boolean updateCategory(long userId, String oldCategory, String newCategory)
     {
+
+        if (oldCategory.equals(newCategory))
+        {
+            return false;
+        }
+
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBHelper.COLUMN_CATEGORY_NAME, newCategory);
         try {

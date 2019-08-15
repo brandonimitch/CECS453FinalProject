@@ -1,86 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/expenseCatMasterLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_color"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
     tools:context="fragments.AddEditCategory">
 
     <TextView
         android:id="@+id/expenseCatTitleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:text="@string/expense_category"
         android:textAlignment="center"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:text="@string/expense_category"
         android:textColor="@color/colorText"
-        android:textSize="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="24dp" />
 
     <Spinner
         android:id="@+id/expenseCatSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:gravity="center"
         android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/expenseCatTitleTextView" />
-
-    <EditText
-        android:id="@+id/changeCategoryEditText"
-        android:layout_width="263dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:hint="@string/original_category"
-        android:inputType="textPersonName"
-        android:textColor="@color/colorText"
-        android:textColorHint="@color/colorText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/expenseCatSpinner" />
+        android:layout_gravity="center"
+        android:layout_margin="16dp" />
 
     <EditText
         android:id="@+id/newCategoryEditText"
-        android:layout_width="265dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
         android:hint="@string/new_category"
         android:inputType="textPersonName"
         android:textColor="@color/colorText"
-        android:textColorHint="@color/colorText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/changeCategoryEditText" />
+        android:textColorHint="@color/colorText"/>
 
     <Button
         android:id="@+id/categorySubmitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
         android:background="@drawable/button_shape"
         android:text="@string/submit_button"
-        android:textColor="@color/colorText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newCategoryEditText" />
+        android:textColor="@color/colorText" />
 
    <!-- <TextView
         android:id="@+id/newCategoryTextView"
@@ -146,4 +116,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reEnterNewCatEditText" />-->
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
